@@ -1,0 +1,34 @@
+{
+    "tools":
+    {
+        "inhousetoolsconcat":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/3.1.Concat.py",
+        "EnzymeDigestion":"http://51120m7l36.zicp.vip:10254/enzyme_digestion_site/",
+        "Homology":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/2.1.HomologySelect.py",
+        "AntigenPresentation":"http://51120m7l36.zicp.vip:10254/antigen_presentation/",
+        "Immunogenicity":"http://51120m7l36.zicp.vip:10254/immunogenicity/",
+        "BinCut":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/1.1.BinCut.py",
+        "GetCutSeq":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/1.2.GetCutSeq_V2_20220720.py",
+        "summary":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/4.1.Summary.py",
+        "Blastp":"/mnt/data2/wuzengding/03.biotools/software/ncbi-blast-2.13.0+/bin/blastp",
+        "python":"/mnt/data2/wuzengding/03.biotools/miniconda3/bin/python3"
+    },
+    "database":
+    {
+        "bastdb":"/mnt/data2/wuzengding/00.database/index_mus_blastdb/tr_mouse_canon_isoform.fasta"
+    },
+    "OutDir":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/test",
+    "RawPeptide":"/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/01.mouse_protein_sequence_data/test.fasta",
+    "parameter":
+    {
+        "Binsize":80,
+        "mhchlatype":"mouse"
+    },
+    "ruler":[
+        "EnzymeDigestion",
+        "Homology",
+        "AntigenPresentation",
+        "Immunogenicity",
+        "Population"
+    ]
+}
+
