@@ -23,13 +23,13 @@ DRB1_1405,DRB1_0101,DRB1_1001,DRB1_1301"
 #MHCIlist="H-2-Kb,H-2-Db"
 #MHCIIlist="H-2-IAb"
 
-netmhcparser=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/parser_for_netmhc.py
-bincuter=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/1.1.BinCut.py
+netmhcparser=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/parser_for_netmhc.py
+bincuter=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/1.1.BinCut.py
 blastp=/mnt/data2/wuzengding/03.biotools/software/ncbi-blast-2.13.0+/bin/blastp
 proteindb=/mnt/data2/wuzengding/00.database/18.uniprot/index_sp_human_canon_isoform/sp_human_canon_isoform.fasta
-homobedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/2.1.HomologySelect_by_outliner_and_makebedfile.py
-TMRbedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/5.1.TransMembrance.py
-enzymesoft=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/3.1.Concat.py 
+homobedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/2.1.HomologySelect_by_outliner_and_makebedfile.py
+TMRbedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/5.1.TransMembrance.py
+enzymesoft=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/3.1.Concat.py 
 homoidcutoff=65
 
 #########################################################################
@@ -81,35 +81,36 @@ python ${netmhcparser} \
 
 ## Step3: prediction of homology
 mkdir -p ${outdir}/03.homologous
-python3 ${bincuter} \
-    -f ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
-    -b 12  \
-    -u ${outdir}/03.homologous/merge_bin_step_sequence.seq  \
-    -o ${outdir}/03.homologous/merge_bin_step_sequence.fasta
- 
-${blastp} -task blastp \
-    -db ${proteindb} \
-    -out ${outdir}/03.homologous/peptide_sequence.blastp \
-    -query ${outdir}/03.homologous/merge_bin_step_sequence.fasta \
-    -outfmt 6
+#python3 ${bincuter} \
+#    -f ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
+#    -b 12  \
+#    -u ${outdir}/03.homologous/merge_bin_step_sequence.seq  \
+#    -o ${outdir}/03.homologous/merge_bin_step_sequence.fasta
+# 
+#${blastp} -task blastp \
+#    -db ${proteindb} \
+#    -out ${outdir}/03.homologous/peptide_sequence.blastp \
+#    -query ${outdir}/03.homologous/merge_bin_step_sequence.fasta \
+#    -outfmt 6
+#
+#python3 ${homobedmake} \
+#    -f ${outdir}/03.homologous/peptide_sequence.blastp \
+#    -i ${homoidcutoff} \
+#    -o ${outdir}/03.homologous
 
-python3 ${homobedmake} \
-    -f ${outdir}/03.homologous/peptide_sequence.blastp \
-    -i ${homoidcutoff} \
-    -o ${outdir}/03.homologous
-
-## make blastp with fasta generated from netMHC.csv 
+# make blastp with fasta generated from netMHC.csv 
 tail -n+2 ${outdir}/02.protein_antigen_prediction/parsed_res_MHCI/merge.netMHCI.csv |\
-    awk -F',' '{print ">"$11"_"$1","$3}'|sort|uniq|tr ',' '\n' > \
+    awk -F','   '{print ">"$11":"$3","$3}'|sort|uniq|tr ',' '\n' > \
         ${outdir}/03.homologous/protein.netMHC.aa.fasta
 tail -n+2 ${outdir}/02.protein_antigen_prediction/parsed_res_MHCII/merge.netMHCII.csv|\
-    awk -F',' '{print ">"$7"_"$1","$3}'|sort|uniq|tr ',' '\n' >> \
+    awk -F','   '{print ">"$7":"$3","$3}'|sort|uniq|tr "\|" "_"|tr ',' '\n' >> \
         ${outdir}/03.homologous/protein.netMHC.aa.fasta
 ${blastp} -task blastp \
     -db ${proteindb} \
     -out ${outdir}/03.homologous/peptide_netMHC.blastp \
     -query ${outdir}/03.homologous/protein.netMHC.aa.fasta \
     -outfmt 6
+
     
 ## Step4: transmembrane prediction
 cd  ${outdir}
@@ -123,12 +124,13 @@ python3  ${TMRbedmake} \
 
 ## Step5: enzyme digestions prediction
 mkdir -p ${outdir}/05.EnzymeDigest
-python enzymesoft 
+touch ${outdir}/05.EnzymeDigest/protein.merge.enzymedigest
+python ${enzymesoft} \
     -r EnzymeDigestion \
     -i ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
     -o ${outdir}/05.EnzymeDigest/protein.merge.enzymedigest
 
-## Step5: Summary and deliverables
+## Step6: Summary and deliverables
 mkdir -p ${outdir}/06.Deliverables 
     cp ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
                 ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta
