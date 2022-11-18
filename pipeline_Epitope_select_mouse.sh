@@ -19,13 +19,13 @@ outdir=$1
 MHCIlist="H-2-Kb,H-2-Db"
 MHCIIlist="H-2-IAb"
 
-netmhcparser=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/parser_for_netmhc.py
-bincuter=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/1.1.BinCut.py
+netmhcparser=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/parser_for_netmhc.py
+bincuter=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/1.1.BinCut.py
 blastp=/mnt/data2/wuzengding/03.biotools/software/ncbi-blast-2.13.0+/bin/blastp
 proteindb=/mnt/data2/wuzengding/00.database/index_mus_blastdb/index_sp_mouse_canon_isoform_blastdb/sp_mouse_canon_isoform.fasta
-homobedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/2.1.HomologySelect_by_outliner_and_makebedfile.py
-TMRbedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/5.1.TransMembrance.py
-enzymesoft=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/3.1.Concat.py 
+homobedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/2.1.HomologySelect_by_outliner_and_makebedfile.py
+TMRbedmake=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/5.1.TransMembrance.py
+enzymesoft=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/Immu_Epitope_analysis/3.1.Concat.py 
 homoidcutoff=65
 
 #########################################################################
