@@ -81,22 +81,22 @@ python ${netmhcparser} \
 
 ## Step3: prediction of homology
 mkdir -p ${outdir}/03.homologous
-#python3 ${bincuter} \
-#    -f ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
-#    -b 12  \
-#    -u ${outdir}/03.homologous/merge_bin_step_sequence.seq  \
-#    -o ${outdir}/03.homologous/merge_bin_step_sequence.fasta
-# 
-#${blastp} -task blastp \
-#    -db ${proteindb} \
-#    -out ${outdir}/03.homologous/peptide_sequence.blastp \
-#    -query ${outdir}/03.homologous/merge_bin_step_sequence.fasta \
-#    -outfmt 6
-#
-#python3 ${homobedmake} \
-#    -f ${outdir}/03.homologous/peptide_sequence.blastp \
-#    -i ${homoidcutoff} \
-#    -o ${outdir}/03.homologous
+python3 ${bincuter} \
+    -f ${outdir}/01.protein_sequence/protein.merge.aa.fasta \
+    -b 12  \
+    -u ${outdir}/03.homologous/merge_bin_step_sequence.seq  \
+    -o ${outdir}/03.homologous/merge_bin_step_sequence.fasta
+ 
+${blastp} -task blastp \
+    -db ${proteindb} \
+    -out ${outdir}/03.homologous/peptide_sequence.blastp \
+    -query ${outdir}/03.homologous/merge_bin_step_sequence.fasta \
+    -outfmt 6
+
+python3 ${homobedmake} \
+    -f ${outdir}/03.homologous/peptide_sequence.blastp \
+    -i ${homoidcutoff} \
+    -o ${outdir}/03.homologous
 
 # make blastp with fasta generated from netMHC.csv 
 tail -n+2 ${outdir}/02.protein_antigen_prediction/parsed_res_MHCI/merge.netMHCI.csv |\
@@ -143,43 +143,43 @@ mkdir -p ${outdir}/06.Deliverables
     cp ${outdir}/04.TransMembrane.DeepTMHMM/TransMembrane.bed \
                 ${outdir}/06.Deliverables/04.TransMembrane.bed
 
-echo ${TAAlist}|sed 's:,:\n:g'|while read proteinname;
+#echo ${TAAlist}|sed 's:,:\n:g'|while read proteinname;
+grep ^">" ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta|cut -f2 -d'|'|while read seqUnipid;
 do 
-    echo ${proteinname}
-    proteinname_upp=$(echo ${proteinname}|tr  [:lower:] [:upper:])
-    epitopname=$(grep ${proteinname_upp} \
-        ${outdir}/06.Deliverables/02.Immunogenicity.netMHCI.bed |\
-    cut -f1 |uniq)
-    
+    echo ${seqUnipid}
+    #proteinname_upp=$(echo ${proteinname}|tr  [:lower:] [:upper:])
+    epitopname=$(echo $(grep "|${seqUnipid}|" ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta |\
+        cut -f1 -d"_"|cut -f2 -d">") |tr "|" "_")
     echo ${epitopname}
+
     ## trans seqid of file of '01.Protein.merge.aa.fasta' 
-    seqid=$(grep ${proteinname} ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta)
+        echo "trans seqid of file of '01.Protein.merge.aa.fasta'"
+    seqid=$(grep "|${seqUnipid}|" ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta)
     sed -i "s;${seqid};\>${epitopname};g" ${outdir}/06.Deliverables/01.Protein.merge.aa.fasta
+    
+    ## trans seqid of file of '02.Immunogenicity.netMHCI.bed' 
+        echo "trans seqid of file of '02.Immunogenicity.netMHCI.bed'"
+    seqid=$(grep "_${seqUnipid}_" ${outdir}/06.Deliverables/02.Immunogenicity.netMHCI.bed |\
+        cut -f1 |uniq|sort|uniq) 
+    sed -i "s;{seqid};${epitopname};g" ${outdir}/06.Deliverables/02.Immunogenicity.netMHCI.bed 
     
     ## trans seqid of file of '02.Immunogenicity.netMHCII.bed' 
     echo "trans seqid of file of '02.Immunogenicity.netMHCII.bed'"
-    grep ${proteinname_upp} ${outdir}/06.Deliverables/02.Immunogenicity.netMHCII.bed |\
-    cut -f1 |uniq|while read seqid;
-    do  
-        echo ${seqid}
-        sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/02.Immunogenicity.netMHCII.bed
-    done
+    seqid=$(grep "|${seqUnipid}|" ${outdir}/06.Deliverables/02.Immunogenicity.netMHCII.bed |\
+        cut -f1 |uniq|sort|uniq)
+    sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/02.Immunogenicity.netMHCII.bed
     
     ## trans seqid of file of '03.Homo_peptide.bed' 
-    echo "trans seqid of file of 'homo_peptide.bed"
-    grep ${proteinname} ${outdir}/06.Deliverables/03.Homo_peptide.bed |\
-    cut -f1 |uniq| while read seqid;
-    do  
-        echo ${seqid}|tr '\|' '_'
-        sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/03.Homo_peptide.bed
-    done
+    echo "trans seqid of file of '03.homo_peptide.bed"
+    grep "|${seqUnipid}|" ${outdir}/06.Deliverables/03.Homo_peptide.bed | while read seqid;
+        do
+            sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/03.Homo_peptide.bed
+        done
     
     ## trans seqid of file of '04.TransMembrane.bed' 
     echo "trans seqid of file of '04.TransMembrane.bed"
-    grep ${proteinname_upp} ${outdir}/06.Deliverables/04.TransMembrane.bed |\
-    cut -f1 |uniq| while read seqid;
-    do  
-        echo ${seqid}
-        sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/04.TransMembrane.bed
-    done
+    seqid=$(grep "|${seqUnipid}|" ${outdir}/06.Deliverables/04.TransMembrane.bed |\
+        cut -f1 |uniq|sort|uniq)
+    sed -i "s;${seqid};${epitopname};g" ${outdir}/06.Deliverables/04.TransMembrane.bed
+
 done

@@ -202,5 +202,5 @@ if __name__ == '__main__':
             dfSW.loc[:,"itemRgb"] = "255,0,0"
             dfSW["score"] = dfSW["score"].apply(lambda x: int(x))
             dfSW[["protein","protStart","protEnd","name","score","strand","thickStart","thickEnd","itemRgb"]].to_csv(outpath+"/parsed_res_MHCII/Immunogenicity.netMHCII.bed",sep="\t",index=False,header=False)
-            bedheader = '''track name="Immunogenicity_MHCI" description="Immunogenicity prenseted by MHCI" visibility=2 itemRgb="On" useScore=1'''
+            bedheader = '''track name="Immunogenicity_MHCII" description="Immunogenicity prenseted by MHCI" visibility=2 itemRgb="On" useScore=1'''
             prepend_line(outpath+"/parsed_res_MHCII/Immunogenicity.netMHCII.bed",bedheader)
