@@ -130,7 +130,12 @@ echo -e "Species genotypes:\n$species_genotypes"
 
 echo "$(realpath ${output_dir}/01.protein_sequence)"
 
-##################  step1 Pre-precess fasta file    ##########################
+
+
+
+
+##################  step1: Pre-precess fasta file    ##########################
+
 if [ -e "${output_dir}/01.protein_sequence" ]; then
     echo "Step1: protein sequence  existed, the fasta id format translating  step passed!"
 else
@@ -156,6 +161,7 @@ run_netmhc() {
     local output_prefix=$3
     local mhci_genotypes=$4
     local mhcii_genotypes=$5
+    local bindlevel=$6
 
     echo "Running netMHC predictions for ${sequence_file} ..."
 
@@ -169,7 +175,9 @@ run_netmhc() {
             -i "${output_dir}/${output_subdir}/${output_prefix}_netMHCpan_result.xls" \
             -o "${output_dir}/${output_subdir}/parsed" \
             -p "${output_prefix}" \
-            -y "csvfasta"
+            -y "csvfasta" \
+            -b "${bindlevel}"
+            
     fi
 
     if [ -n "${mhcii_genotypes}" ]; then
@@ -179,22 +187,33 @@ run_netmhc() {
             -i "${output_dir}/${output_subdir}/${output_prefix}_netMHCIIpan_result.xls" \
             -o "${output_dir}/${output_subdir}/parsed" \
             -p "${output_prefix}" \
-            -y "csvfasta"
+            -y "csvfasta" \
+            -b "${bindlevel}"
     fi
 }
 
 if [ -e "${output_dir}/02.protein_antigen_prediction_var" ]; then
     echo "Step2: protein_antigen_prediction var existed, this step passed!"
 else
-    echo "Step2: prediction with netMHC for var seq Starting......"
-    run_netmhc "${processed_var_faa}" "02.protein_antigen_prediction_var" "${output_prefix}" "${mhci_genotypes}" "${mhcii_genotypes}"
+    if [ -e ${processed_var_faa} ];then
+        echo "Step2: prediction with netMHC for var seq Starting......"
+        run_netmhc "${processed_var_faa}" "02.protein_antigen_prediction_var" "${output_prefix}" "${mhci_genotypes}" "${mhcii_genotypes}" "SBWB"
+    else
+        echo " ${processed_var_faa} non-exist!"
+        exit 1
+    fi
 fi
 
 if [ -e "${output_dir}/02.protein_antigen_prediction_ref" ]; then
     echo "Step2.2: protein_antigen_prediction ref existed, this step passed!"
 else
-    echo "Step2.2: prediction with netMHC for ref seq Starting......"
-    run_netmhc "${processed_ref_faa}" "02.protein_antigen_prediction_ref" "${output_prefix}" "${mhci_genotypes}" "${mhcii_genotypes}"
+    if [ -e ${processed_ref_faa} ];then
+        echo "Step2.2: prediction with netMHC for ref seq Starting......"
+        run_netmhc "${processed_ref_faa}" "02.protein_antigen_prediction_ref" "${output_prefix}" "${mhci_genotypes}" "${mhcii_genotypes}" "all"
+    else
+        echo " ${processed_ref_faa} non-exist!"
+        exit 1
+    fi
 fi
 
 
@@ -289,11 +308,13 @@ fi
 
 
 ###########      Step5: enzyme digestions prediction   ###############
-cd $(dirname ${output_dir})
+outputdir=$(dirname $(realpath ${output_dir}))
+echo ${outputdir}
+cd ${outputdir}
 if [ -e ${output_dir}/05.EnzymeDigest ];then
-    echo "Step6:  EnzymeDigest existed, this step passed!"
+    echo "Step5:  EnzymeDigest existed, this step passed!"
 else
-    echo "Step6:  EnzymeDigest Starting..........."
+    echo "Step5:  EnzymeDigest Starting..........."
     mkdir -p ${output_dir}/05.EnzymeDigest
     true >${output_dir}/05.EnzymeDigest/protein.merge.enzymedigest
     #python ${enzymesoft} \
@@ -303,5 +324,3 @@ else
 fi
 
 ###############     summary results             ##################
-
-

@@ -37,7 +37,7 @@ class BlastpParser:
                 end = row['send']
                 peptide_seq = subject_seq[start:end]
                 seq_id_parts =row["qseqid"].split("_")
-                seq_id = seq_id_parts[0]+ " " + "_".join([seq_id_parts[1], seq_id_parts[2], row["sseqid"]])
+                seq_id = seq_id_parts[0].replace('Var','Ref')+ " " + "_".join([seq_id_parts[1], seq_id_parts[2], row["sseqid"]])
                 out_file.write(f'>{seq_id}\n{peptide_seq}\n')
 
     def run(self, fasta_file, output_dir, prefix):

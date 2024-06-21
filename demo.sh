@@ -1,1 +1,1 @@
-/mnt/data2/wuzengding/03.biotools/miniconda3/envs/snakemake/bin/snakemake  -s /mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/pipeline/00.vaccine_sequence_design.py  --cores 16 -p  --config OutDir=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/test2 RawPeptide=/mnt/data2/wuzengding/05.pipeline_dev/Antigen_Design/01.mouse_protein_sequence_data/test.fasta --keep-incomplete 
+bash pipeline_Epitope_analysis.sh -f ./data/COAD_0009689008.ref_variants.faa  -l "HLA-A11:01,HLA-A33:03,HLA-B52:01,HLA-B58:,HLA-C03:02,HLA-C07:02,DRB1_0301" -o ./data -p "0009689008"
