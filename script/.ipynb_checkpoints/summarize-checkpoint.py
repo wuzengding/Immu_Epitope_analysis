@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 import argparse
 import pandas as pd
@@ -21,6 +22,7 @@ class NetMHCSummarizer:
         self.homo_netmhcpan_faa_file = None
         self.homo_netmhciipan_df = None
         self.homo_netmhciipan_faa_file = None
+        self.id_transformation_dict = {}
 
 
     def get_transmembrane_region(self, peptide_id, pos, peptide_length):
@@ -131,6 +133,31 @@ class NetMHCSummarizer:
                 return affinity[0]
             else:
                 return '-'
+                
+    def load_id_transformation(self):
+        id_transformation = os.path.join(self.data_dir, '01.protein_sequence', f'{self.sample_name}_id_transformation.txt')
+
+        transcript_id_pattern = r'(\S+)\('
+        gene_name_pattern = r'\((.*?)\)'
+        hgvs_p_pattern = r'p\.\w+\d+\w+'
+
+        with open(id_transformation, 'r') as id_transformation_file:
+            for line in id_transformation_file.readlines():
+                if line.startswith(">Var"):
+                    identity_transformated = line.split('->')[1].strip().lstrip('>')
+                    identity_origin = line.split('->')[0].split()[1]
+    
+                    gene_match = re.search(gene_name_pattern, identity_origin)
+                    gene_name = gene_match.group(1) if gene_match else None
+
+                    transcript_match = re.search(transcript_id_pattern + re.escape(gene_name) + r'\)', identity_origin)
+                    transcript_id = transcript_match.group(1) if transcript_match else None
+
+                    hgvs_p_match = re.search(hgvs_p_pattern, identity_origin)
+                    hgvs_p = hgvs_p_match.group(0) if hgvs_p_match else None
+
+                    self.id_transformation_dict[identity_transformated] = [gene_name, transcript_id, hgvs_p]
+
     
     def load_tmr_data(self):
         tmr_file = os.path.join(self.data_dir, '04.TransMembrane.DeepTMHMM', 'TMRs.gff3')
@@ -163,6 +190,7 @@ class NetMHCSummarizer:
             self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCIIpan_homologous.faa'))
 
     def summarize(self):
+        self.load_id_transformation()
         self.load_tmr_data()
         self.load_dataframes()
         if self.mhc_genotype in ['mhci', 'all']:
@@ -204,18 +232,6 @@ class NetMHCSummarizer:
             
             self.netmhciipan_df['Aff(nM)_competitor'] = self.netmhciipan_df.apply(lambda row: self.get_affinity(row['Wildtype_peptide'], row['Homo_peptide'], row['Identity'], row["MHC"], self.ref_netmhciipan_df, 'Affinity(nM)'), axis=1)
 
-
-        # 删除 Peptide 与 Wildtype_peptide 完全相同的行
-        self.netmhcpan_df = self.netmhcpan_df[self.netmhcpan_df['Peptide'] != self.netmhcpan_df['Wildtype_peptide']]
-        self.netmhciipan_df = self.netmhciipan_df[self.netmhciipan_df['Peptide'] != self.netmhciipan_df['Wildtype_peptide']]
-
-        # 删除不需要的列
-        netmhcpan_columns_to_drop = ['Of', 'Gp', 'Gl', 'Ip', 'Il']
-        netmhciipan_columns_to_drop = ['Of', 'Exp_Bind']
-        self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
-        self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
-
-
         # 计算 Aff(nM)_competitor/Aff(nM) 的比值
         self.netmhcpan_df['Aff(nM)_competitor/Aff(nM)'] = self.netmhcpan_df.apply(
             lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Aff(nM)']), 2) if row['Aff(nM)_competitor'] != '-' and row['Aff(nM)'] != '-' else '-', axis=1
@@ -224,7 +240,27 @@ class NetMHCSummarizer:
             lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Affinity(nM)']), 2) if row['Aff(nM)_competitor'] != '-' and row['Affinity(nM)'] != '-' else '-', axis=1
         )
 
-        
+        # 还原 identity
+        def restore_identity(df):
+            #df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
+            df['gene_name'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else '-')
+            df['transcript_id'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][1] if x in self.id_transformation_dict else '-')
+            df['hgvs_p'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][2] if x in self.id_transformation_dict else '-')
+        print(self.id_transformation_dict)
+        restore_identity(self.netmhcpan_df)
+        restore_identity(self.netmhciipan_df)
+
+        # 删除 Peptide 与 Wildtype_peptide 完全相同的行
+        self.netmhcpan_df = self.netmhcpan_df[self.netmhcpan_df['Peptide'] != self.netmhcpan_df['Wildtype_peptide']]
+        self.netmhciipan_df = self.netmhciipan_df[self.netmhciipan_df['Peptide'] != self.netmhciipan_df['Wildtype_peptide']]
+
+        # 删除不需要的列
+        netmhcpan_columns_to_drop = ['Identity','Of', 'Gp', 'Gl', 'Ip', 'Il']
+        netmhciipan_columns_to_drop = ['Identity','Of', 'Exp_Bind']
+        self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
+        self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
+
+
         output_deliverable_dir = os.path.join(self.output_dir, 'Deliverable')
         if os.path.exists(output_deliverable_dir):
             shutil.rmtree(output_deliverable_dir)
