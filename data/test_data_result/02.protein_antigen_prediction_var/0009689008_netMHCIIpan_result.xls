@@ -1,0 +1,543 @@
+# NetMHCIIpan version 4.0
+
+# Input is in FASTA format
+
+# Peptide length 15
+
+# Prediction Mode: EL+BA
+
+# Threshold for Strong binding peptides (%Rank)	2%
+# Threshold for Weak binding peptides (%Rank)	10%
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  13     DRB1_0301      SVGVGVWARNPRYRT    3   VGVWARNPR     0.793   Var2406230001      0.130953     7.66       NA      0.330367       1401.48    13.17   <=WB
+  12     DRB1_0301      ASVGVGVWARNPRYR    4   VGVWARNPR     0.913   Var2406230001      0.114048     8.47       NA      0.294559       2064.65    18.89   <=WB
+  14     DRB1_0301      VGVGVWARNPRYRTE    2   VGVWARNPR     0.487   Var2406230001      0.088402    10.12       NA      0.324821       1488.15    13.95       
+  16     DRB1_0301      VGVWARNPRYRTEGE    3   WARNPRYRT     0.887   Var2406230001      0.078671    10.97       NA      0.274385       2568.28    23.11       
+  15     DRB1_0301      GVGVWARNPRYRTEG    4   WARNPRYRT     0.600   Var2406230001      0.072884    11.55       NA      0.298213       1984.61    18.21       
+  11     DRB1_0301      GASVGVGVWARNPRY    5   VGVWARNPR     0.913   Var2406230001      0.057727    13.44       NA      0.248385       3402.64    29.73       
+  17     DRB1_0301      GVWARNPRYRTEGEA    2   WARNPRYRT     0.940   Var2406230001      0.043361    16.05       NA      0.225656       4351.30    36.77       
+  10     DRB1_0301      AGASVGVGVWARNPR    6   VGVWARNPR     0.733   Var2406230001      0.015996    28.32       NA      0.206991       5325.07    43.38       
+   4     DRB1_0301      WKLLVVAGASVGVGV    3   LVVAGASVG     0.513   Var2406230001      0.006425    43.74       NA      0.246830       3460.38    30.17       
+   3     DRB1_0301      LWKLLVVAGASVGVG    4   LVVAGASVG     0.593   Var2406230001      0.004872    48.94       NA      0.229903       4155.88    35.38       
+   5     DRB1_0301      KLLVVAGASVGVGVW    2   LVVAGASVG     0.433   Var2406230001      0.004805    49.20       NA      0.241030       3684.49    31.87       
+   2     DRB1_0301      WLWKLLVVAGASVGV    5   LVVAGASVG     0.653   Var2406230001      0.002085    65.70       NA      0.222619       4496.66    37.74       
+   6     DRB1_0301      LLVVAGASVGVGVWA    3   VAGASVGVG     0.460   Var2406230001      0.001903    67.51       NA      0.193815       6141.00    48.48       
+   7     DRB1_0301      LVVAGASVGVGVWAR    2   VAGASVGVG     0.387   Var2406230001      0.001217    75.46       NA      0.172804       7708.49    57.10       
+   1     DRB1_0301      IWLWKLLVVAGASVG    5   LLVVAGASV     0.413   Var2406230001      0.000843    81.50       NA      0.193188       6182.80    48.74       
+   9     DRB1_0301      VAGASVGVGVWARNP    4   SVGVGVWAR     0.720   Var2406230001      0.000827    81.81       NA      0.143482      10586.50    69.46       
+   8     DRB1_0301      VVAGASVGVGVWARN    5   SVGVGVWAR     0.513   Var2406230001      0.000692    84.37       NA      0.155828       9262.73    64.22       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 2
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  13     DRB1_0301      SYFLEMEVTQPTSNP    3   LEMEVTQPT     0.960   Var2406230002      0.021628    24.02       NA      0.257830       3072.09    27.19       
+  12     DRB1_0301      FSYFLEMEVTQPTSN    4   LEMEVTQPT     0.927   Var2406230002      0.010319    35.34       NA      0.267140       2777.71    24.84       
+  14     DRB1_0301      YFLEMEVTQPTSNPV    2   LEMEVTQPT     0.807   Var2406230002      0.006232    44.31       NA      0.240523       3704.76    32.02       
+  11     DRB1_0301      KFSYFLEMEVTQPTS    5   LEMEVTQPT     0.627   Var2406230002      0.004703    49.62       NA      0.265525       2826.68    25.23       
+  17     DRB1_0301      EMEVTQPTSNPVTPK    3   VTQPTSNPV     0.680   Var2406230002      0.003413    55.99       NA      0.114173      14536.99    81.12       
+  15     DRB1_0301      FLEMEVTQPTSNPVT    1   LEMEVTQPT     0.433   Var2406230002      0.002804    59.87       NA      0.200707       5699.72    45.80       
+   9     DRB1_0301      NEKFSYFLEMEVTQP    3   FSYFLEMEV     0.473   Var2406230002      0.002762    60.17       NA      0.206313       5364.28    43.63       
+  10     DRB1_0301      EKFSYFLEMEVTQPT    4   YFLEMEVTQ     0.527   Var2406230002      0.002463    62.55       NA      0.242569       3623.64    31.42       
+  16     DRB1_0301      LEMEVTQPTSNPVTP    4   VTQPTSNPV     0.507   Var2406230002      0.001845    68.09       NA      0.138038      11228.81    71.72       
+   8     DRB1_0301      CNEKFSYFLEMEVTQ    4   FSYFLEMEV     0.593   Var2406230002      0.001431    72.73       NA      0.190800       6344.63    49.67       
+   4     DRB1_0301      EGNMCNEKFSYFLEM    2   NMCNEKFSY     0.620   Var2406230002      0.000999    78.82       NA      0.214055       4933.24    40.76       
+   3     DRB1_0301      CEGNMCNEKFSYFLE    3   NMCNEKFSY     0.620   Var2406230002      0.000984    79.05       NA      0.205464       5413.78    43.95       
+   7     DRB1_0301      MCNEKFSYFLEMEVT    5   FSYFLEMEV     0.747   Var2406230002      0.000613    86.01       NA      0.181110       7045.95    53.65       
+   2     DRB1_0301      CCEGNMCNEKFSYFL    4   NMCNEKFSY     0.627   Var2406230002      0.000589    86.54       NA      0.211155       5090.48    41.82       
+   1     DRB1_0301      CCCEGNMCNEKFSYF    5   NMCNEKFSY     0.713   Var2406230002      0.000455    89.47       NA      0.183275       6882.82    52.76       
+   5     DRB1_0301      GNMCNEKFSYFLEME    1   NMCNEKFSY     0.387   Var2406230002      0.000208    95.00       NA      0.206272       5366.66    43.65       
+   6     DRB1_0301      NMCNEKFSYFLEMEV    6   FSYFLEMEV     0.487   Var2406230002      0.000191    95.00       NA      0.189579       6429.01    50.16       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   7     DRB1_0301      SYFLEMEVTQPTSNP    3   LEMEVTQPT     0.960   Var2406230003      0.021628    24.02       NA      0.257830       3072.09    27.19       
+   6     DRB1_0301      FSYFLEMEVTQPTSN    4   LEMEVTQPT     0.927   Var2406230003      0.010319    35.34       NA      0.267140       2777.71    24.84       
+   8     DRB1_0301      YFLEMEVTQPTSNPV    2   LEMEVTQPT     0.807   Var2406230003      0.006232    44.31       NA      0.240523       3704.76    32.02       
+   5     DRB1_0301      KFSYFLEMEVTQPTS    5   LEMEVTQPT     0.627   Var2406230003      0.004703    49.62       NA      0.265525       2826.68    25.23       
+  11     DRB1_0301      EMEVTQPTSNPVTPK    3   VTQPTSNPV     0.680   Var2406230003      0.003413    55.99       NA      0.114173      14536.99    81.12       
+   9     DRB1_0301      FLEMEVTQPTSNPVT    1   LEMEVTQPT     0.433   Var2406230003      0.002804    59.87       NA      0.200707       5699.72    45.80       
+   3     DRB1_0301      NEKFSYFLEMEVTQP    3   FSYFLEMEV     0.473   Var2406230003      0.002762    60.17       NA      0.206313       5364.28    43.63       
+   4     DRB1_0301      EKFSYFLEMEVTQPT    4   YFLEMEVTQ     0.527   Var2406230003      0.002463    62.55       NA      0.242569       3623.64    31.42       
+  10     DRB1_0301      LEMEVTQPTSNPVTP    4   VTQPTSNPV     0.507   Var2406230003      0.001845    68.09       NA      0.138038      11228.81    71.72       
+   2     DRB1_0301      CNEKFSYFLEMEVTQ    4   FSYFLEMEV     0.593   Var2406230003      0.001431    72.73       NA      0.190800       6344.63    49.67       
+   1     DRB1_0301      MCNEKFSYFLEMEVT    5   FSYFLEMEV     0.747   Var2406230003      0.000613    86.01       NA      0.181110       7045.95    53.65       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  13     DRB1_0301      GERLRCVTREACGEA    3   LRCVTREAC     1.000   Var2406230004      0.076478    11.18       NA      0.210006       5154.16    42.25       
+  12     DRB1_0301      EGERLRCVTREACGE    4   LRCVTREAC     1.000   Var2406230004      0.058188    13.37       NA      0.196784       5946.86    47.27       
+  11     DRB1_0301      CEGERLRCVTREACG    5   LRCVTREAC     0.993   Var2406230004      0.024633    22.35       NA      0.198495       5837.78    46.62       
+  14     DRB1_0301      ERLRCVTREACGEAE    2   LRCVTREAC     0.973   Var2406230004      0.019229    25.65       NA      0.196831       5943.84    47.25       
+   6     DRB1_0301      YGCVWCEGERLRCVT    3   VWCEGERLR     0.773   Var2406230004      0.005482    46.68       NA      0.250458       3327.17    29.16       
+   5     DRB1_0301      QYGCVWCEGERLRCV    4   VWCEGERLR     0.713   Var2406230004      0.004575    50.17       NA      0.257462       3084.35    27.29       
+  10     DRB1_0301      WCEGERLRCVTREAC    6   LRCVTREAC     0.920   Var2406230004      0.003575    54.97       NA      0.200610       5705.71    45.84       
+   4     DRB1_0301      PQYGCVWCEGERLRC    5   VWCEGERLR     0.580   Var2406230004      0.002760    60.18       NA      0.228101       4237.70    35.97       
+   3     DRB1_0301      MPQYGCVWCEGERLR    6   VWCEGERLR     0.467   Var2406230004      0.002635    61.18       NA      0.227328       4273.29    36.23       
+   7     DRB1_0301      GCVWCEGERLRCVTR    2   VWCEGERLR     0.620   Var2406230004      0.002297    63.88       NA      0.228240       4231.33    35.93       
+  15     DRB1_0301      RLRCVTREACGEAEA    1   LRCVTREAC     0.707   Var2406230004      0.001961    66.93       NA      0.180862       7064.88    53.76       
+  16     DRB1_0301      LRCVTREACGEAEAV    3   VTREACGEA     0.720   Var2406230004      0.000522    88.00       NA      0.146209      10278.70    68.30       
+   8     DRB1_0301      CVWCEGERLRCVTRE    2   WCEGERLRC     0.287   Var2406230004      0.000370    91.61       NA      0.198459       5840.06    46.63       
+   1     DRB1_0301      TAMPQYGCVWCEGER    5   YGCVWCEGE     0.567   Var2406230004      0.000331    92.63       NA      0.100935      16775.65    85.84       
+  17     DRB1_0301      RCVTREACGEAEAVA    2   VTREACGEA     0.553   Var2406230004      0.000329    92.68       NA      0.109920      15221.56    82.66       
+   2     DRB1_0301      AMPQYGCVWCEGERL    4   YGCVWCEGE     0.500   Var2406230004      0.000247    94.84       NA      0.170268       7922.93    58.15       
+   9     DRB1_0301      VWCEGERLRCVTREA    2   CEGERLRCV     0.240   Var2406230004      0.000232    95.00       NA      0.181930       6983.71    53.32       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   1     DRB1_0301      NSISNQPKDENIMGL    2   ISNQPKDEN     0.987   Var2406230005      0.024634    22.35       NA      0.126250      12756.31    76.50       
+  17     DRB1_0301      KKTEMVSSVPAENKS    5   VSSVPAENK     0.447   Var2406230005      0.019374    25.55       NA      0.251517       3289.27    28.87       
+   9     DRB1_0301      DENIMGLLKKTEMVS    3   IMGLLKKTE     0.573   Var2406230005      0.014385    29.94       NA      0.248282       3406.44    29.76       
+  10     DRB1_0301      ENIMGLLKKTEMVSS    3   MGLLKKTEM     0.680   Var2406230005      0.010602    34.88       NA      0.264657       2853.35    25.45       
+   8     DRB1_0301      KDENIMGLLKKTEMV    4   IMGLLKKTE     0.640   Var2406230005      0.009704    36.40       NA      0.240347       3711.82    32.08       
+  16     DRB1_0301      LKKTEMVSSVPAENK    5   MVSSVPAEN     0.453   Var2406230005      0.009458    36.84       NA      0.244002       3567.89    31.01       
+   2     DRB1_0301      SISNQPKDENIMGLL    1   ISNQPKDEN     0.820   Var2406230005      0.006458    43.64       NA      0.133419      11804.24    73.63       
+   7     DRB1_0301      PKDENIMGLLKKTEM    5   IMGLLKKTE     0.687   Var2406230005      0.005616    46.22       NA      0.212551       5014.17    41.31       
+  15     DRB1_0301      LLKKTEMVSSVPAEN    4   TEMVSSVPA     0.380   Var2406230005      0.002745    60.30       NA      0.213667       4953.99    40.91       
+  11     DRB1_0301      NIMGLLKKTEMVSSV    2   MGLLKKTEM     0.560   Var2406230005      0.002509    62.19       NA      0.265585       2824.84    25.22       
+  13     DRB1_0301      MGLLKKTEMVSSVPA    3   LKKTEMVSS     0.580   Var2406230005      0.002216    64.52       NA      0.229306       4182.81    35.57       
+   6     DRB1_0301      QPKDENIMGLLKKTE    6   IMGLLKKTE     0.527   Var2406230005      0.002119    65.37       NA      0.173680       7635.77    56.73       
+  12     DRB1_0301      IMGLLKKTEMVSSVP    4   LKKTEMVSS     0.427   Var2406230005      0.002023    66.32       NA      0.249367       3366.68    29.46       
+  14     DRB1_0301      GLLKKTEMVSSVPAE    2   LKKTEMVSS     0.360   Var2406230005      0.001709    69.43       NA      0.205697       5400.15    43.86       
+   3     DRB1_0301      ISNQPKDENIMGLLK    3   QPKDENIMG     0.360   Var2406230005      0.001352    73.70       NA      0.144912      10423.96    68.85       
+   4     DRB1_0301      SNQPKDENIMGLLKK    3   PKDENIMGL     0.453   Var2406230005      0.001196    75.78       NA      0.148438      10033.77    67.36       
+   5     DRB1_0301      NQPKDENIMGLLKKT    4   DENIMGLLK     0.273   Var2406230005      0.000998    78.83       NA      0.150007       9864.88    66.69       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  10     DRB1_0301      IEKVIPNTGDSEHLF    3   VIPNTGDSE     0.973   Var2406230006      0.063151    12.67       NA      0.249539       3360.42    29.41       
+   9     DRB1_0301      SIEKVIPNTGDSEHL    4   VIPNTGDSE     0.947   Var2406230006      0.059882    13.10       NA      0.214312       4919.54    40.66       
+   8     DRB1_0301      YSIEKVIPNTGDSEH    5   VIPNTGDSE     0.887   Var2406230006      0.048871    14.90       NA      0.194707       6082.02    48.12       
+   2     DRB1_0301      SAGMVVYSIEKVIPN    3   MVVYSIEKV     0.480   Var2406230006      0.031333    19.53       NA      0.294050       2076.05    18.98       
+   3     DRB1_0301      AGMVVYSIEKVIPNT    3   VVYSIEKVI     0.327   Var2406230006      0.029173    20.33       NA      0.301094       1923.70    17.66       
+  11     DRB1_0301      EKVIPNTGDSEHLFR    2   VIPNTGDSE     0.720   Var2406230006      0.027308    21.06       NA      0.233286       4006.51    34.30       
+   4     DRB1_0301      GMVVYSIEKVIPNTG    3   VYSIEKVIP     0.633   Var2406230006      0.023510    22.93       NA      0.285814       2269.54    20.62       
+   1     DRB1_0301      GSAGMVVYSIEKVIP    4   MVVYSIEKV     0.600   Var2406230006      0.017885    26.70       NA      0.274589       2562.62    23.06       
+   7     DRB1_0301      VYSIEKVIPNTGDSE    6   VIPNTGDSE     0.487   Var2406230006      0.015465    28.83       NA      0.196114       5990.13    47.55       
+  12     DRB1_0301      KVIPNTGDSEHLFRI    4   NTGDSEHLF     0.527   Var2406230006      0.011194    34.01       NA      0.242734       3617.18    31.38       
+   5     DRB1_0301      MVVYSIEKVIPNTGD    3   YSIEKVIPN     0.467   Var2406230006      0.010311    35.35       NA      0.260102       2997.50    26.59       
+  13     DRB1_0301      VIPNTGDSEHLFRIL    3   NTGDSEHLF     0.760   Var2406230006      0.008472    38.74       NA      0.246181       3484.76    30.36       
+   6     DRB1_0301      VVYSIEKVIPNTGDS    4   IEKVIPNTG     0.473   Var2406230006      0.007922    39.95       NA      0.215623       4850.25    40.18       
+  14     DRB1_0301      IPNTGDSEHLFRILA    2   NTGDSEHLF     0.660   Var2406230006      0.004130    52.31       NA      0.224235       4418.72    37.23       
+  15     DRB1_0301      PNTGDSEHLFRILAN    1   NTGDSEHLF     0.387   Var2406230006      0.001567    71.05       NA      0.198840       5816.03    46.49       
+  17     DRB1_0301      TGDSEHLFRILANGS    3   SEHLFRILA     0.500   Var2406230006      0.000648    85.24       NA      0.177859       7298.20    55.00       
+  16     DRB1_0301      NTGDSEHLFRILANG    4   SEHLFRILA     0.567   Var2406230006      0.000473    89.08       NA      0.174156       7596.55    56.53       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  15     DRB1_0301      LGLLQPSPPRFKQFS    3   LQPSPPRFK     0.913   Var2406230007      0.018460    26.24       NA      0.397789        675.73     6.70       
+  14     DRB1_0301      DLGLLQPSPPRFKQF    4   LQPSPPRFK     0.760   Var2406230007      0.014795    29.51       NA      0.390818        728.67     7.18       
+   8     DRB1_0301      SGVQWHDLGLLQPSP    3   QWHDLGLLQ     0.827   Var2406230007      0.013301    31.11       NA      0.262082       2933.96    26.08       
+   7     DRB1_0301      QSGVQWHDLGLLQPS    4   QWHDLGLLQ     0.653   Var2406230007      0.011242    33.94       NA      0.270603       2675.56    23.98       
+  13     DRB1_0301      HDLGLLQPSPPRFKQ    5   LQPSPPRFK     0.607   Var2406230007      0.011136    34.09       NA      0.353910       1086.32    10.38       
+  16     DRB1_0301      GLLQPSPPRFKQFSC    2   LQPSPPRFK     0.960   Var2406230007      0.009095    37.51       NA      0.346348       1178.94    11.24       
+   1     DRB1_0301      KVSLYHQSGVQWHDL    3   LYHQSGVQW     0.607   Var2406230007      0.006940    42.31       NA      0.237766       3816.93    32.90       
+   6     DRB1_0301      HQSGVQWHDLGLLQP    5   QWHDLGLLQ     0.567   Var2406230007      0.006493    43.54       NA      0.260075       2998.37    26.60       
+   9     DRB1_0301      GVQWHDLGLLQPSPP    2   QWHDLGLLQ     0.780   Var2406230007      0.004544    50.32       NA      0.240075       3722.76    32.16       
+  12     DRB1_0301      WHDLGLLQPSPPRFK    4   GLLQPSPPR     0.393   Var2406230007      0.004041    52.73       NA      0.307366       1797.49    16.55       
+   2     DRB1_0301      VSLYHQSGVQWHDLG    2   LYHQSGVQW     0.327   Var2406230007      0.002052    66.03       NA      0.206364       5361.32    43.62       
+   5     DRB1_0301      YHQSGVQWHDLGLLQ    5   VQWHDLGLL     0.440   Var2406230007      0.001717    69.36       NA      0.241367       3671.08    31.77       
+  17     DRB1_0301      LLQPSPPRFKQFSCL    1   LQPSPPRFK     0.927   Var2406230007      0.001513    71.72       NA      0.290570       2155.71    19.66       
+  11     DRB1_0301      QWHDLGLLQPSPPRF    5   GLLQPSPPR     0.573   Var2406230007      0.001455    72.43       NA      0.203928       5504.51    44.55       
+  10     DRB1_0301      VQWHDLGLLQPSPPR    1   QWHDLGLLQ     0.527   Var2406230007      0.001270    74.72       NA      0.221331       4559.76    38.16       
+   3     DRB1_0301      SLYHQSGVQWHDLGL    2   YHQSGVQWH     0.527   Var2406230007      0.000637    85.48       NA      0.182303       6955.59    53.16       
+   4     DRB1_0301      LYHQSGVQWHDLGLL    6   VQWHDLGLL     0.340   Var2406230007      0.000486    88.79       NA      0.191687       6284.03    49.33       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   7     DRB1_0301      QEILEKSNRTEEQND    3   LEKSNRTEE     0.953   Var2406230008      0.140842     7.27       NA      0.201262       5665.60    45.59   <=WB
+   6     DRB1_0301      KQEILEKSNRTEEQN    4   LEKSNRTEE     0.833   Var2406230008      0.103745     9.07       NA      0.213075       4985.82    41.12   <=WB
+   5     DRB1_0301      LKQEILEKSNRTEEQ    5   LEKSNRTEE     0.660   Var2406230008      0.061280    12.91       NA      0.226489       4312.26    36.50       
+   8     DRB1_0301      EILEKSNRTEEQNDK    2   LEKSNRTEE     0.873   Var2406230008      0.057237    13.51       NA      0.173569       7644.95    56.78       
+   2     DRB1_0301      NERLKQEILEKSNRT    3   LKQEILEKS     0.747   Var2406230008      0.043018    16.14       NA      0.260479       2985.29    26.49       
+   1     DRB1_0301      ENERLKQEILEKSNR    4   LKQEILEKS     0.853   Var2406230008      0.035757    18.09       NA      0.251357       3294.97    28.91       
+   4     DRB1_0301      RLKQEILEKSNRTEE    3   QEILEKSNR     0.500   Var2406230008      0.030302    19.90       NA      0.248918       3383.08    29.58       
+   3     DRB1_0301      ERLKQEILEKSNRTE    2   LKQEILEKS     0.460   Var2406230008      0.027156    21.14       NA      0.252595       3251.13    28.58       
+  15     DRB1_0301      RTEEQNDKISELIER    3   EQNDKISEL     0.760   Var2406230008      0.012569    32.06       NA      0.203345       5539.34    44.78       
+  17     DRB1_0301      EEQNDKISELIERNQ    4   DKISELIER     0.700   Var2406230008      0.008969    37.75       NA      0.197924       5873.96    46.83       
+   9     DRB1_0301      ILEKSNRTEEQNDKI    1   LEKSNRTEE     0.627   Var2406230008      0.008394    38.90       NA      0.148349      10043.44    67.39       
+  14     DRB1_0301      NRTEEQNDKISELIE    4   EQNDKISEL     0.660   Var2406230008      0.007985    39.80       NA      0.159687       8883.94    62.59       
+  16     DRB1_0301      TEEQNDKISELIERN    5   DKISELIER     0.460   Var2406230008      0.006266    44.21       NA      0.200434       5716.58    45.91       
+  13     DRB1_0301      SNRTEEQNDKISELI    5   EQNDKISEL     0.533   Var2406230008      0.005029    48.35       NA      0.159794       8873.66    62.54       
+  12     DRB1_0301      KSNRTEEQNDKISEL    3   RTEEQNDKI     0.233   Var2406230008      0.003889    53.46       NA      0.134749      11635.59    73.08       
+  11     DRB1_0301      EKSNRTEEQNDKISE    3   NRTEEQNDK     0.440   Var2406230008      0.003571    54.99       NA      0.099322      17071.00    86.37       
+  10     DRB1_0301      LEKSNRTEEQNDKIS    4   NRTEEQNDK     0.440   Var2406230008      0.002188    64.74       NA      0.108112      15522.26    83.32       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 2
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   2     DRB1_0301      SHNTYLTGHQLKGEH    3   TYLTGHQLK     0.327   Var2406230009      0.004857    48.99       NA      0.148643      10011.54    67.27       
+   1     DRB1_0301      SSHNTYLTGHQLKGE    4   TYLTGHQLK     0.387   Var2406230009      0.003113    57.90       NA      0.143566      10576.88    69.42       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  10     DRB1_0301      LAVLKKNVKEKEEKK    3   LKKNVKEKE     0.993   Var2406230010      0.205600     5.38       NA      0.339416       1270.76    12.00   <=WB
+   7     DRB1_0301      LYDLAVLKKNVKEKE    3   LAVLKKNVK     0.887   Var2406230010      0.174640     6.16       NA      0.362172        993.42     9.53   <=WB
+   9     DRB1_0301      DLAVLKKNVKEKEEK    4   LKKNVKEKE     0.847   Var2406230010      0.163142     6.47       NA      0.340635       1254.11    11.87   <=WB
+   8     DRB1_0301      YDLAVLKKNVKEKEE    2   LAVLKKNVK     0.573   Var2406230010      0.150283     6.92       NA      0.351561       1114.28    10.65   <=WB
+  11     DRB1_0301      AVLKKNVKEKEEKKK    2   LKKNVKEKE     0.987   Var2406230010      0.136865     7.41       NA      0.291885       2125.26    19.40   <=WB
+   6     DRB1_0301      ALYDLAVLKKNVKEK    4   LAVLKKNVK     0.980   Var2406230010      0.129308     7.73       NA      0.385860        768.82     7.55   <=WB
+   3     DRB1_0301      SLAALYDLAVLKKNV    3   ALYDLAVLK     0.853   Var2406230010      0.064717    12.47       NA      0.495507        234.75     2.49       
+   2     DRB1_0301      GSLAALYDLAVLKKN    4   ALYDLAVLK     0.820   Var2406230010      0.063638    12.61       NA      0.489498        250.51     2.66       
+   5     DRB1_0301      AALYDLAVLKKNVKE    5   LAVLKKNVK     0.860   Var2406230010      0.058258    13.36       NA      0.439924        428.33     4.40       
+   1     DRB1_0301      KGSLAALYDLAVLKK    5   ALYDLAVLK     0.573   Var2406230010      0.042981    16.14       NA      0.478395        282.49     2.97       
+  12     DRB1_0301      VLKKNVKEKEEKKKK    1   LKKNVKEKE     0.787   Var2406230010      0.042735    16.21       NA      0.259612       3013.43    26.72       
+   4     DRB1_0301      LAALYDLAVLKKNVK    2   ALYDLAVLK     0.440   Var2406230010      0.031149    19.59       NA      0.468030        316.02     3.30       
+  13     DRB1_0301      LKKNVKEKEEKKKKK    4   VKEKEEKKK     0.513   Var2406230010      0.013570    30.81       NA      0.189240       6452.63    50.30       
+  14     DRB1_0301      KKNVKEKEEKKKKKI    3   VKEKEEKKK     0.653   Var2406230010      0.011021    34.26       NA      0.121712      13398.28    78.27       
+  15     DRB1_0301      KNVKEKEEKKKKKIK    2   VKEKEEKKK     0.460   Var2406230010      0.004086    52.52       NA      0.107657      15598.86    83.48       
+  16     DRB1_0301      NVKEKEEKKKKKIKT    3   EKEEKKKKK     0.567   Var2406230010      0.002522    62.08       NA      0.094543      17976.92    87.95       
+  17     DRB1_0301      VKEKEEKKKKKIKTI    2   EKEEKKKKK     0.473   Var2406230010      0.001125    76.88       NA      0.089244      19037.73    89.70       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 6
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   3     DRB1_0301      EYKLVVVGAGDVGKS    3   LVVVGAGDV     0.580   Var2406230011      0.018583    26.14       NA      0.238300       3794.94    32.73       
+   4     DRB1_0301      YKLVVVGAGDVGKSA    4   VVGAGDVGK     0.487   Var2406230011      0.016236    28.09       NA      0.233010       4018.49    34.38       
+   2     DRB1_0301      TEYKLVVVGAGDVGK    4   LVVVGAGDV     0.653   Var2406230011      0.012302    32.42       NA      0.226812       4297.22    36.40       
+   5     DRB1_0301      KLVVVGAGDVGKSAL    3   VVGAGDVGK     0.647   Var2406230011      0.011856    33.02       NA      0.221664       4543.36    38.05       
+  14     DRB1_0301      VGKSALTIQLIQNHF    5   LTIQLIQNH     0.800   Var2406230011      0.005149    47.90       NA      0.276167       2519.24    22.71       
+   1     DRB1_0301      MTEYKLVVVGAGDVG    5   LVVVGAGDV     0.573   Var2406230011      0.004863    48.97       NA      0.192441       6232.98    49.04       
+   6     DRB1_0301      LVVVGAGDVGKSALT    2   VVGAGDVGK     0.493   Var2406230011      0.002839    59.64       NA      0.187207       6596.14    51.14       
+  13     DRB1_0301      DVGKSALTIQLIQNH    6   LTIQLIQNH     0.573   Var2406230011      0.001633    70.23       NA      0.239082       3762.97    32.48       
+   7     DRB1_0301      VVVGAGDVGKSALTI    2   VGAGDVGKS     0.167   Var2406230011      0.001165    76.26       NA      0.167842       8133.65    59.16       
+  11     DRB1_0301      AGDVGKSALTIQLIQ    3   VGKSALTIQ     0.573   Var2406230011      0.000843    81.50       NA      0.172705       7716.75    57.14       
+   8     DRB1_0301      VVGAGDVGKSALTIQ    5   DVGKSALTI     0.180   Var2406230011      0.000735    83.56       NA      0.132290      11949.32    74.09       
+  10     DRB1_0301      GAGDVGKSALTIQLI    4   VGKSALTIQ     0.540   Var2406230011      0.000677    84.66       NA      0.161312       8729.11    61.90       
+  12     DRB1_0301      GDVGKSALTIQLIQN    3   GKSALTIQL     0.353   Var2406230011      0.000625    85.75       NA      0.178674       7234.13    54.66       
+   9     DRB1_0301      VGAGDVGKSALTIQL    4   DVGKSALTI     0.240   Var2406230011      0.000596    86.38       NA      0.137424      11303.65    71.97       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  14     DRB1_0301      WLPLSLNNGSITHLV    3   LSLNNGSIT     0.733   Var2406230012      0.002439    62.74       NA      0.289464       2181.66    19.88       
+  13     DRB1_0301      GWLPLSLNNGSITHL    4   LSLNNGSIT     0.747   Var2406230012      0.001778    68.75       NA      0.268419       2739.54    24.52       
+  15     DRB1_0301      LPLSLNNGSITHLVI    2   LSLNNGSIT     0.607   Var2406230012      0.001621    70.38       NA      0.276834       2501.12    22.56       
+  12     DRB1_0301      EGWLPLSLNNGSITH    5   LSLNNGSIT     0.633   Var2406230012      0.001379    73.37       NA      0.239989       3726.22    32.19       
+  11     DRB1_0301      PEGWLPLSLNNGSIT    3   WLPLSLNNG     0.560   Var2406230012      0.001200    75.72       NA      0.209348       5190.99    42.50       
+  16     DRB1_0301      PLSLNNGSITHLVIR    3   LNNGSITHL     0.467   Var2406230012      0.001077    77.62       NA      0.254929       3170.05    27.95       
+  10     DRB1_0301      PPEGWLPLSLNNGSI    4   WLPLSLNNG     0.707   Var2406230012      0.000950    79.57       NA      0.145274      10383.21    68.70       
+  17     DRB1_0301      LSLNNGSITHLVIRP    5   GSITHLVIR     0.333   Var2406230012      0.000822    81.90       NA      0.224706       4396.26    37.08       
+   9     DRB1_0301      FPPEGWLPLSLNNGS    5   WLPLSLNNG     0.693   Var2406230012      0.000751    83.25       NA      0.136980      11358.08    72.16       
+   8     DRB1_0301      QFPPEGWLPLSLNNG    6   WLPLSLNNG     0.467   Var2406230012      0.000367    91.68       NA      0.127735      12552.99    75.92       
+   1     DRB1_0301      YIVCRALQFPPEGWL    0   YIVCRALQF     0.260   Var2406230012      0.000338    92.45       NA      0.269419       2710.06    24.27       
+   2     DRB1_0301      IVCRALQFPPEGWLP    4   ALQFPPEGW     0.293   Var2406230012      0.000262    94.45       NA      0.162613       8607.09    61.35       
+   3     DRB1_0301      VCRALQFPPEGWLPL    3   ALQFPPEGW     0.313   Var2406230012      0.000239    95.00       NA      0.160508       8805.37    62.24       
+   4     DRB1_0301      CRALQFPPEGWLPLS    5   FPPEGWLPL     0.240   Var2406230012      0.000216    95.00       NA      0.150588       9803.06    66.44       
+   6     DRB1_0301      ALQFPPEGWLPLSLN    3   FPPEGWLPL     0.340   Var2406230012      0.000209    95.00       NA      0.142595      10688.59    69.84       
+   5     DRB1_0301      RALQFPPEGWLPLSL    4   FPPEGWLPL     0.240   Var2406230012      0.000185    95.00       NA      0.153436       9505.58    65.23       
+   7     DRB1_0301      LQFPPEGWLPLSLNN    4   PEGWLPLSL     0.520   Var2406230012      0.000159    95.00       NA      0.135361      11558.80    72.83       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  19     DRB1_0301      WWPISGAENTRSYKR    3   ISGAENTRS     0.867   Var2406230013      0.016787    27.61       NA      0.242959       3608.39    31.31       
+  22     DRB1_0301      ISGAENTRSYKRNSK    3   AENTRSYKR     0.733   Var2406230013      0.015847    28.47       NA      0.193455       6164.97    48.63       
+  20     DRB1_0301      WPISGAENTRSYKRN    2   ISGAENTRS     0.640   Var2406230013      0.013597    30.78       NA      0.228119       4236.88    35.97       
+  23     DRB1_0301      SGAENTRSYKRNSKR    2   AENTRSYKR     0.493   Var2406230013      0.012049    32.76       NA      0.177702       7310.61    55.06       
+  21     DRB1_0301      PISGAENTRSYKRNS    4   AENTRSYKR     0.400   Var2406230013      0.011150    34.07       NA      0.205852       5391.10    43.81       
+  24     DRB1_0301      GAENTRSYKRNSKRA    4   TRSYKRNSK     0.567   Var2406230013      0.009209    37.30       NA      0.172914       7699.32    57.05       
+  18     DRB1_0301      EWWPISGAENTRSYK    4   ISGAENTRS     0.847   Var2406230013      0.008941    37.80       NA      0.213595       4957.85    40.93       
+  17     DRB1_0301      LEWWPISGAENTRSY    5   ISGAENTRS     0.713   Var2406230013      0.003314    56.62       NA      0.188363       6514.15    50.66       
+  16     DRB1_0301      SLEWWPISGAENTRS    6   ISGAENTRS     0.293   Var2406230013      0.001678    69.74       NA      0.160553       8801.09    62.22       
+  14     DRB1_0301      LLSLEWWPISGAENT    3   LEWWPISGA     0.760   Var2406230013      0.001561    71.12       NA      0.196446       5968.65    47.41       
+  13     DRB1_0301      SLLSLEWWPISGAEN    4   LEWWPISGA     0.733   Var2406230013      0.001253    74.93       NA      0.212298       5027.92    41.41       
+  15     DRB1_0301      LSLEWWPISGAENTR    2   LEWWPISGA     0.527   Var2406230013      0.001178    76.06       NA      0.154571       9389.57    64.75       
+  12     DRB1_0301      VSLLSLEWWPISGAE    5   LEWWPISGA     0.653   Var2406230013      0.001053    77.98       NA      0.223614       4448.51    37.43       
+   1     DRB1_0301      ITIIALCCLPLVSLL    3   IALCCLPLV     0.520   Var2406230013      0.000540    87.61       NA      0.283563       2325.50    21.08       
+  11     DRB1_0301      LVSLLSLEWWPISGA    4   LSLEWWPIS     0.220   Var2406230013      0.000471    89.12       NA      0.229560       4171.33    35.49       
+   2     DRB1_0301      TIIALCCLPLVSLLS    2   IALCCLPLV     0.373   Var2406230013      0.000304    93.34       NA      0.284607       2299.38    20.86       
+   9     DRB1_0301      LPLVSLLSLEWWPIS    2   LVSLLSLEW     0.347   Var2406230013      0.000193    95.00       NA      0.230808       4115.38    35.08       
+  10     DRB1_0301      PLVSLLSLEWWPISG    5   LSLEWWPIS     0.207   Var2406230013      0.000187    95.00       NA      0.227370       4271.35    36.21       
+   8     DRB1_0301      CLPLVSLLSLEWWPI    3   LVSLLSLEW     0.440   Var2406230013      0.000173    95.00       NA      0.215040       4880.94    40.39       
+   7     DRB1_0301      CCLPLVSLLSLEWWP    4   LVSLLSLEW     0.560   Var2406230013      0.000151    95.00       NA      0.186001       6682.78    51.63       
+   3     DRB1_0301      IIALCCLPLVSLLSL    1   IALCCLPLV     0.253   Var2406230013      0.000101    95.00       NA      0.257480       3083.75    27.28       
+   6     DRB1_0301      LCCLPLVSLLSLEWW    5   LVSLLSLEW     0.480   Var2406230013      0.000077    95.00       NA      0.198116       5861.77    46.76       
+   5     DRB1_0301      ALCCLPLVSLLSLEW    6   LVSLLSLEW     0.320   Var2406230013      0.000066    95.00       NA      0.210602       5121.03    42.02       
+   4     DRB1_0301      IALCCLPLVSLLSLE    2   LCCLPLVSL     0.453   Var2406230013      0.000055    95.00       NA      0.227945       4244.86    36.03       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   8     DRB1_0301      YKTLSVECPGSRLND    3   LSVECPGSR     1.000   Var2406230014      0.051666    14.42       NA      0.390084        734.47     7.24       
+   7     DRB1_0301      WYKTLSVECPGSRLN    4   LSVECPGSR     0.993   Var2406230014      0.030747    19.74       NA      0.402776        640.23     6.38       
+   9     DRB1_0301      KTLSVECPGSRLNDI    2   LSVECPGSR     0.940   Var2406230014      0.022051    23.77       NA      0.336332       1313.88    12.40       
+   6     DRB1_0301      EWYKTLSVECPGSRL    5   LSVECPGSR     0.907   Var2406230014      0.014962    29.34       NA      0.382701        795.55     7.80       
+  15     DRB1_0301      CPGSRLNDISLGEPD    4   RLNDISLGE     0.800   Var2406230014      0.011910    32.95       NA      0.196488       5965.94    47.39       
+  16     DRB1_0301      PGSRLNDISLGEPDL    3   RLNDISLGE     0.767   Var2406230014      0.010932    34.40       NA      0.218344       4709.54    39.20       
+  14     DRB1_0301      ECPGSRLNDISLGEP    5   RLNDISLGE     0.740   Var2406230014      0.005777    45.70       NA      0.198141       5860.19    46.75       
+   5     DRB1_0301      EEWYKTLSVECPGSR    6   LSVECPGSR     0.680   Var2406230014      0.004325    51.37       NA      0.302574       1893.14    17.38       
+  17     DRB1_0301      GSRLNDISLGEPDLL    2   RLNDISLGE     0.607   Var2406230014      0.003960    53.12       NA      0.239275       3755.12    32.42       
+  10     DRB1_0301      TLSVECPGSRLNDIS    1   LSVECPGSR     0.760   Var2406230014      0.002714    60.55       NA      0.255892       3137.19    27.70       
+  13     DRB1_0301      VECPGSRLNDISLGE    6   RLNDISLGE     0.560   Var2406230014      0.001456    72.42       NA      0.179450       7173.64    54.34       
+   4     DRB1_0301      AEEWYKTLSVECPGS    3   WYKTLSVEC     0.653   Var2406230014      0.000899    80.44       NA      0.134712      11640.25    73.09       
+   3     DRB1_0301      EAEEWYKTLSVECPG    4   WYKTLSVEC     0.587   Var2406230014      0.000834    81.67       NA      0.131314      12076.18    74.50       
+   2     DRB1_0301      LEAEEWYKTLSVECP    5   WYKTLSVEC     0.513   Var2406230014      0.000628    85.68       NA      0.143427      10592.80    69.48       
+   1     DRB1_0301      ELEAEEWYKTLSVEC    3   AEEWYKTLS     0.240   Var2406230014      0.000326    92.76       NA      0.145310      10379.17    68.68       
+  12     DRB1_0301      SVECPGSRLNDISLG    4   PGSRLNDIS     0.140   Var2406230014      0.000201    95.00       NA      0.117001      14098.92    80.09       
+  11     DRB1_0301      LSVECPGSRLNDISL    5   PGSRLNDIS     0.107   Var2406230014      0.000184    95.00       NA      0.167445       8168.66    59.32       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  11     DRB1_0301      TEVVRHCPHHERCSD    3   VRHCPHHER     0.993   Var2406230015      0.094032     9.71       NA      0.197290       5914.39    47.07   <=WB
+  10     DRB1_0301      MTEVVRHCPHHERCS    4   VRHCPHHER     0.940   Var2406230015      0.059738    13.13       NA      0.213648       4955.01    40.91       
+  12     DRB1_0301      EVVRHCPHHERCSDS    2   VRHCPHHER     0.993   Var2406230015      0.037898    17.48       NA      0.179270       7187.63    54.41       
+   9     DRB1_0301      HMTEVVRHCPHHERC    5   VRHCPHHER     0.927   Var2406230015      0.034242    18.56       NA      0.212743       5003.77    41.24       
+   8     DRB1_0301      QHMTEVVRHCPHHER    6   VRHCPHHER     0.753   Var2406230015      0.018418    26.27       NA      0.215547       4854.24    40.20       
+   1     DRB1_0301      MAIYKQSQHMTEVVR    3   YKQSQHMTE     0.713   Var2406230015      0.005241    47.55       NA      0.249679       3355.33    29.37       
+  13     DRB1_0301      VVRHCPHHERCSDSD    1   VRHCPHHER     0.893   Var2406230015      0.004420    50.92       NA      0.152951       9555.60    65.44       
+   7     DRB1_0301      SQHMTEVVRHCPHHE    3   MTEVVRHCP     0.447   Var2406230015      0.003152    57.65       NA      0.170592       7895.20    58.01       
+   2     DRB1_0301      AIYKQSQHMTEVVRH    2   YKQSQHMTE     0.607   Var2406230015      0.002512    62.16       NA      0.233078       4015.54    34.36       
+   6     DRB1_0301      QSQHMTEVVRHCPHH    4   MTEVVRHCP     0.393   Var2406230015      0.002491    62.33       NA      0.169892       7955.23    58.31       
+   5     DRB1_0301      KQSQHMTEVVRHCPH    3   QHMTEVVRH     0.547   Var2406230015      0.002030    66.25       NA      0.175911       7453.66    55.80       
+   4     DRB1_0301      YKQSQHMTEVVRHCP    4   QHMTEVVRH     0.560   Var2406230015      0.001087    77.46       NA      0.179726       7152.25    54.22       
+   3     DRB1_0301      IYKQSQHMTEVVRHC    5   QHMTEVVRH     0.340   Var2406230015      0.000834    81.67       NA      0.206154       5373.52    43.69       
+  17     DRB1_0301      CPHHERCSDSDGLAP    5   RCSDSDGLA     0.500   Var2406230015      0.000675    84.70       NA      0.091480      18582.67    88.96       
+  14     DRB1_0301      VRHCPHHERCSDSDG    0   VRHCPHHER     0.313   Var2406230015      0.000302    93.39       NA      0.093522      18176.61    88.29       
+  16     DRB1_0301      HCPHHERCSDSDGLA    5   ERCSDSDGL     0.447   Var2406230015      0.000267    94.32       NA      0.081876      20617.55    91.74       
+  15     DRB1_0301      RHCPHHERCSDSDGL    6   ERCSDSDGL     0.373   Var2406230015      0.000128    95.00       NA      0.061519      25697.69    95.00       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 1
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  14     DRB1_0301      VVLYLEDLHGADEDE    3   YLEDLHGAD     0.907   Var2406230016      0.107988     8.82       NA      0.313568       1680.83    15.58   <=WB
+  13     DRB1_0301      TVVLYLEDLHGADED    4   YLEDLHGAD     0.740   Var2406230016      0.089788    10.00       NA      0.330828       1394.50    13.11   <=WB
+  12     DRB1_0301      MTVVLYLEDLHGADE    5   YLEDLHGAD     0.493   Var2406230016      0.056755    13.59       NA      0.345095       1195.03    11.38       
+  15     DRB1_0301      VLYLEDLHGADEDED    2   YLEDLHGAD     0.900   Var2406230016      0.050119    14.69       NA      0.269800       2698.91    24.18       
+   6     DRB1_0301      KDRWRSMTVVLYLED    3   WRSMTVVLY     0.967   Var2406230016      0.037720    17.53       NA      0.317381       1612.90    15.02       
+  11     DRB1_0301      SMTVVLYLEDLHGAD    4   VLYLEDLHG     0.453   Var2406230016      0.029487    20.20       NA      0.322438       1527.02    14.29       
+   5     DRB1_0301      TKDRWRSMTVVLYLE    4   WRSMTVVLY     0.947   Var2406230016      0.023269    23.06       NA      0.318432       1594.66    14.87       
+   4     DRB1_0301      DTKDRWRSMTVVLYL    5   WRSMTVVLY     0.900   Var2406230016      0.013109    31.36       NA      0.312024       1709.14    15.81       
+  10     DRB1_0301      RSMTVVLYLEDLHGA    5   VLYLEDLHG     0.553   Var2406230016      0.012955    31.56       NA      0.271696       2644.10    23.73       
+  16     DRB1_0301      LYLEDLHGADEDEDL    1   YLEDLHGAD     0.673   Var2406230016      0.012180    32.58       NA      0.214482       4910.50    40.60       
+   7     DRB1_0301      DRWRSMTVVLYLEDL    2   WRSMTVVLY     0.820   Var2406230016      0.012035    32.78       NA      0.289772       2174.40    19.82       
+  17     DRB1_0301      YLEDLHGADEDEDLF    4   LHGADEDED     0.673   Var2406230016      0.006154    44.54       NA      0.143750      10555.85    69.35       
+   3     DRB1_0301      PDTKDRWRSMTVVLY    6   WRSMTVVLY     0.773   Var2406230016      0.005947    45.17       NA      0.288924       2194.45    19.98       
+   9     DRB1_0301      WRSMTVVLYLEDLHG    5   VVLYLEDLH     0.440   Var2406230016      0.004020    52.83       NA      0.255708       3143.44    27.75       
+   8     DRB1_0301      RWRSMTVVLYLEDLH    1   WRSMTVVLY     0.373   Var2406230016      0.002688    60.76       NA      0.284899       2292.12    20.80       
+   1     DRB1_0301      PSPDTKDRWRSMTVV    3   DTKDRWRSM     0.513   Var2406230016      0.001101    77.25       NA      0.178488       7248.70    54.74       
+   2     DRB1_0301      SPDTKDRWRSMTVVL    4   KDRWRSMTV     0.173   Var2406230016      0.000576    86.82       NA      0.210752       5112.73    41.97       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 2
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  10     DRB1_0301      LLQMLEGDQAGFRIP    4   LEGDQAGFR     1.000   Var2406230017      0.677358     1.09       NA      0.591444         83.14     0.71   <=SB
+  11     DRB1_0301      LQMLEGDQAGFRIPM    3   LEGDQAGFR     1.000   Var2406230017      0.662967     1.16       NA      0.608963         68.78     0.53   <=SB
+  12     DRB1_0301      QMLEGDQAGFRIPMS    2   LEGDQAGFR     1.000   Var2406230017      0.502031     2.03       NA      0.555198        123.06     1.20   <=WB
+   9     DRB1_0301      ELLQMLEGDQAGFRI    5   LEGDQAGFR     0.993   Var2406230017      0.484112     2.15       NA      0.578084         96.07     0.87   <=WB
+   8     DRB1_0301      EELLQMLEGDQAGFR    6   LEGDQAGFR     0.860   Var2406230017      0.172024     6.23       NA      0.488619        252.91     2.69   <=WB
+  13     DRB1_0301      MLEGDQAGFRIPMSL    1   LEGDQAGFR     0.993   Var2406230017      0.114131     8.47       NA      0.472959        299.61     3.14   <=WB
+   2     DRB1_0301      PADVTEEELLQMLEG    3   VTEEELLQM     0.973   Var2406230017      0.036086    17.99       NA      0.230521       4128.18    35.17       
+   1     DRB1_0301      PPADVTEEELLQMLE    4   VTEEELLQM     0.887   Var2406230017      0.024004    22.68       NA      0.232933       4021.84    34.41       
+   7     DRB1_0301      EEELLQMLEGDQAGF    4   LQMLEGDQA     0.847   Var2406230017      0.010170    35.59       NA      0.243755       3577.44    31.08       
+   3     DRB1_0301      ADVTEEELLQMLEGD    2   VTEEELLQM     0.907   Var2406230017      0.008597    38.48       NA      0.213228       4977.58    41.07       
+   6     DRB1_0301      TEEELLQMLEGDQAG    5   LQMLEGDQA     0.793   Var2406230017      0.007348    41.28       NA      0.211045       5096.55    41.86       
+  17     DRB1_0301      DQAGFRIPMSLGEPH    4   FRIPMSLGE     0.713   Var2406230017      0.002727    60.45       NA      0.164296       8451.78    60.64       
+  14     DRB1_0301      LEGDQAGFRIPMSLG    0   LEGDQAGFR     0.473   Var2406230017      0.002027    66.28       NA      0.280466       2404.74    21.75       
+   5     DRB1_0301      VTEEELLQMLEGDQA    6   LQMLEGDQA     0.533   Var2406230017      0.001724    69.29       NA      0.209445       5185.54    42.46       
+  16     DRB1_0301      GDQAGFRIPMSLGEP    5   FRIPMSLGE     0.607   Var2406230017      0.001337    73.89       NA      0.151076       9751.43    66.24       
+   4     DRB1_0301      DVTEEELLQMLEGDQ    1   VTEEELLQM     0.633   Var2406230017      0.001321    74.09       NA      0.187907       6546.37    50.85       
+  15     DRB1_0301      EGDQAGFRIPMSLGE    3   QAGFRIPMS     0.333   Var2406230017      0.000972    79.23       NA      0.158432       9005.40    63.12       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 2 Number of weak binders: 4
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   9     DRB1_0301      QASALIDWPAPFFER    3   ALIDWPAPF     0.833   Var2406230018      0.084055    10.50       NA      0.461054        340.79     3.52       
+   8     DRB1_0301      RQASALIDWPAPFFE    4   ALIDWPAPF     0.880   Var2406230018      0.045794    15.53       NA      0.425878        498.63     5.04       
+  10     DRB1_0301      ASALIDWPAPFFERS    2   ALIDWPAPF     0.567   Var2406230018      0.040430    16.79       NA      0.424333        507.04     5.12       
+  17     DRB1_0301      PAPFFERSSSKRYTM    4   FERSSSKRY     0.787   Var2406230018      0.025911    21.72       NA      0.326764       1457.19    13.67       
+   7     DRB1_0301      TRQASALIDWPAPFF    5   ALIDWPAPF     0.880   Var2406230018      0.020925    24.48       NA      0.413250        571.64     5.73       
+  16     DRB1_0301      WPAPFFERSSSKRYT    5   FERSSSKRY     0.693   Var2406230018      0.020201    24.95       NA      0.296399       2023.95    18.54       
+  11     DRB1_0301      SALIDWPAPFFERSS    2   LIDWPAPFF     0.487   Var2406230018      0.009851    36.13       NA      0.369171        920.97     8.89       
+  15     DRB1_0301      DWPAPFFERSSSKRY    5   FFERSSSKR     0.427   Var2406230018      0.008727    38.22       NA      0.262069       2934.38    26.08       
+   6     DRB1_0301      QTRQASALIDWPAPF    6   ALIDWPAPF     0.793   Var2406230018      0.005664    46.06       NA      0.342896       1223.80    11.62       
+   1     DRB1_0301      GRTQAQTRQASALID    2   TQAQTRQAS     0.633   Var2406230018      0.002397    63.08       NA      0.198664       5827.12    46.56       
+  12     DRB1_0301      ALIDWPAPFFERSSS    1   LIDWPAPFF     0.567   Var2406230018      0.002360    63.37       NA      0.275640       2533.65    22.83       
+  14     DRB1_0301      IDWPAPFFERSSSKR    6   FFERSSSKR     0.627   Var2406230018      0.001986    66.69       NA      0.168424       8082.59    58.92       
+   3     DRB1_0301      TQAQTRQASALIDWP    3   QTRQASALI     0.373   Var2406230018      0.001392    73.21       NA      0.154789       9367.44    64.66       
+   4     DRB1_0301      QAQTRQASALIDWPA    3   TRQASALID     0.627   Var2406230018      0.001127    76.85       NA      0.148861       9987.96    67.18       
+   5     DRB1_0301      AQTRQASALIDWPAP    5   ASALIDWPA     0.260   Var2406230018      0.000903    80.36       NA      0.147044      10186.26    67.95       
+   2     DRB1_0301      RTQAQTRQASALIDW    4   QTRQASALI     0.240   Var2406230018      0.000898    80.46       NA      0.188112       6531.87    50.76       
+  13     DRB1_0301      LIDWPAPFFERSSSK    4   PAPFFERSS     0.207   Var2406230018      0.000281    93.95       NA      0.159672       8885.38    62.60       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+  11     DRB1_0301      EEQEMVENLFDSLCS    4   MVENLFDSL     0.467   Var2406230019      0.002132    65.24       NA      0.189694       6421.01    50.11       
+   4     DRB1_0301      RHNPSTAEEQEMVEN    4   STAEEQEMV     0.627   Var2406230019      0.002008    66.47       NA      0.103458      16323.90    85.00       
+   9     DRB1_0301      TAEEQEMVENLFDSL    4   QEMVENLFD     0.487   Var2406230019      0.001771    68.82       NA      0.177852       7298.76    55.00       
+   5     DRB1_0301      HNPSTAEEQEMVENL    3   STAEEQEMV     0.660   Var2406230019      0.001557    71.17       NA      0.115083      14394.56    80.79       
+   8     DRB1_0301      STAEEQEMVENLFDS    5   QEMVENLFD     0.520   Var2406230019      0.001496    71.93       NA      0.120613      13558.55    78.69       
+  10     DRB1_0301      AEEQEMVENLFDSLC    5   MVENLFDSL     0.440   Var2406230019      0.001464    72.32       NA      0.184882       6764.18    52.10       
+   1     DRB1_0301      VFKRHNPSTAEEQEM    2   KRHNPSTAE     0.320   Var2406230019      0.001239    75.12       NA      0.124167      13047.07    77.31       
+   3     DRB1_0301      KRHNPSTAEEQEMVE    5   STAEEQEMV     0.480   Var2406230019      0.001190    75.88       NA      0.102120      16561.94    85.45       
+   6     DRB1_0301      NPSTAEEQEMVENLF    2   STAEEQEMV     0.433   Var2406230019      0.000879    80.82       NA      0.119134      13777.26    79.27       
+  12     DRB1_0301      EQEMVENLFDSLCSC    3   MVENLFDSL     0.447   Var2406230019      0.000868    81.03       NA      0.195744       6014.16    47.70       
+   2     DRB1_0301      FKRHNPSTAEEQEMV    3   HNPSTAEEQ     0.293   Var2406230019      0.000851    81.35       NA      0.116235      14216.26    80.37       
+   7     DRB1_0301      PSTAEEQEMVENLFD    5   EQEMVENLF     0.067   Var2406230019      0.000838    81.60       NA      0.118859      13818.32    79.38       
+  13     DRB1_0301      QEMVENLFDSLCSCL    2   MVENLFDSL     0.373   Var2406230019      0.000425    90.16       NA      0.202810       5571.50    45.00       
+  14     DRB1_0301      EMVENLFDSLCSCLM    2   VENLFDSLC     0.247   Var2406230019      0.000222    95.00       NA      0.217153       4770.62    39.62       
+  16     DRB1_0301      VENLFDSLCSCLMLS    4   FDSLCSCLM     0.340   Var2406230019      0.000120    95.00       NA      0.216896       4783.90    39.71       
+  15     DRB1_0301      MVENLFDSLCSCLML    3   NLFDSLCSC     0.280   Var2406230019      0.000109    95.00       NA      0.216522       4803.30    39.85       
+  17     DRB1_0301      ENLFDSLCSCLMLSS    3   FDSLCSCLM     0.380   Var2406230019      0.000095    95.00       NA      0.228715       4209.64    35.77       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   4     DRB1_0301      LHQLECSGAISVRCN    3   LECSGAISV     0.940   Var2406230020      0.003758    54.09       NA      0.238514       3786.17    32.66       
+   2     DRB1_0301      ATLHQLECSGAISVR    5   LECSGAISV     0.773   Var2406230020      0.003189    57.41       NA      0.248744       3389.45    29.63       
+  12     DRB1_0301      AISVRCNLYLLGSSD    3   VRCNLYLLG     0.847   Var2406230020      0.003181    57.46       NA      0.248528       3397.38    29.69       
+  10     DRB1_0301      SGAISVRCNLYLLGS    3   ISVRCNLYL     0.407   Var2406230020      0.002473    62.47       NA      0.277598       2480.53    22.38       
+   3     DRB1_0301      TLHQLECSGAISVRC    4   LECSGAISV     0.827   Var2406230020      0.002386    63.17       NA      0.237751       3817.55    32.90       
+  17     DRB1_0301      CNLYLLGSSDSSAPA    4   LLGSSDSSA     0.593   Var2406230020      0.002344    63.50       NA      0.201891       5627.17    45.35       
+  11     DRB1_0301      GAISVRCNLYLLGSS    4   VRCNLYLLG     0.667   Var2406230020      0.002255    64.21       NA      0.269324       2712.84    24.30       
+   5     DRB1_0301      HQLECSGAISVRCNL    2   LECSGAISV     0.887   Var2406230020      0.002210    64.57       NA      0.215964       4832.39    40.05       
+  16     DRB1_0301      RCNLYLLGSSDSSAP    5   LLGSSDSSA     0.427   Var2406230020      0.001537    71.42       NA      0.193189       6182.74    48.74       
+   9     DRB1_0301      CSGAISVRCNLYLLG    4   ISVRCNLYL     0.540   Var2406230020      0.001448    72.52       NA      0.258224       3059.03    27.09       
+  13     DRB1_0301      ISVRCNLYLLGSSDS    2   VRCNLYLLG     0.760   Var2406230020      0.001333    73.94       NA      0.222147       4519.68    37.89       
+   1     DRB1_0301      PATLHQLECSGAISV    3   LHQLECSGA     0.533   Var2406230020      0.000711    84.01       NA      0.202406       5595.90    45.15       
+  14     DRB1_0301      SVRCNLYLLGSSDSS    1   VRCNLYLLG     0.447   Var2406230020      0.000668    84.83       NA      0.203024       5558.61    44.91       
+   8     DRB1_0301      ECSGAISVRCNLYLL    5   ISVRCNLYL     0.573   Var2406230020      0.000628    85.68       NA      0.247811       3423.84    29.89       
+  15     DRB1_0301      VRCNLYLLGSSDSSA    4   LYLLGSSDS     0.573   Var2406230020      0.000604    86.21       NA      0.196878       5940.82    47.23       
+   6     DRB1_0301      QLECSGAISVRCNLY    1   LECSGAISV     0.487   Var2406230020      0.000341    92.37       NA      0.208464       5240.88    42.83       
+   7     DRB1_0301      LECSGAISVRCNLYL    6   ISVRCNLYL     0.440   Var2406230020      0.000317    93.00       NA      0.227140       4281.99    36.29       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   6     DRB1_0301      CQEVLKFATRDNGFL    4   LKFATRDNG     0.993   Var2406230021      0.073201    11.52       NA      0.307289       1798.99    16.56       
+   7     DRB1_0301      QEVLKFATRDNGFLL    3   LKFATRDNG     0.960   Var2406230021      0.063915    12.57       NA      0.373784        876.13     8.53       
+   5     DRB1_0301      NCQEVLKFATRDNGF    5   LKFATRDNG     0.987   Var2406230021      0.062436    12.76       NA      0.278247       2463.18    22.24       
+   8     DRB1_0301      EVLKFATRDNGFLLQ    2   LKFATRDNG     0.673   Var2406230021      0.024600    22.37       NA      0.395955        689.27     6.83       
+   4     DRB1_0301      ENCQEVLKFATRDNG    6   LKFATRDNG     0.887   Var2406230021      0.021454    24.13       NA      0.237149       3842.50    33.09       
+   9     DRB1_0301      VLKFATRDNGFLLQY    4   ATRDNGFLL     0.720   Var2406230021      0.011851    33.03       NA      0.413080        572.69     5.74       
+  17     DRB1_0301      NGFLLQYLVAIPMEK    4   LQYLVAIPM     0.773   Var2406230021      0.011325    33.81       NA      0.322383       1527.92    14.30       
+  10     DRB1_0301      LKFATRDNGFLLQYL    3   ATRDNGFLL     0.900   Var2406230021      0.008390    38.91       NA      0.412070        578.98     5.80       
+  11     DRB1_0301      KFATRDNGFLLQYLV    2   ATRDNGFLL     0.860   Var2406230021      0.004274    51.62       NA      0.370519        907.64     8.79       
+  16     DRB1_0301      DNGFLLQYLVAIPME    5   LQYLVAIPM     0.707   Var2406230021      0.003438    55.83       NA      0.260026       2999.96    26.61       
+   1     DRB1_0301      SLDENCQEVLKFATR    1   LDENCQEVL     0.253   Var2406230021      0.002645    61.10       NA      0.210124       5147.59    42.20       
+  15     DRB1_0301      RDNGFLLQYLVAIPM    6   LQYLVAIPM     0.487   Var2406230021      0.000835    81.65       NA      0.233237       4008.63    34.31       
+   3     DRB1_0301      DENCQEVLKFATRDN    3   CQEVLKFAT     0.447   Var2406230021      0.000794    82.43       NA      0.176968       7368.90    55.37       
+   2     DRB1_0301      LDENCQEVLKFATRD    4   CQEVLKFAT     0.413   Var2406230021      0.000667    84.85       NA      0.183889       6837.24    52.51       
+  12     DRB1_0301      FATRDNGFLLQYLVA    1   ATRDNGFLL     0.660   Var2406230021      0.000404    90.71       NA      0.291759       2128.15    19.43       
+  14     DRB1_0301      TRDNGFLLQYLVAIP    5   FLLQYLVAI     0.527   Var2406230021      0.000389    91.11       NA      0.185853       6693.49    51.70       
+  13     DRB1_0301      ATRDNGFLLQYLVAI    6   FLLQYLVAI     0.273   Var2406230021      0.000156    95.00       NA      0.215620       4850.41    40.18       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Allele: DRB1_0301
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Pos           MHC              Peptide   Of        Core  Core_Rel        Identity      Score_EL %Rank_EL Exp_Bind      Score_BA  Affinity(nM) %Rank_BA  BindLevel
+--------------------------------------------------------------------------------------------------------------------------------------------
+   1     DRB1_0301      VMILRSRFLDARRKR    3   LRSRFLDAR     0.620   Var2406230022      0.023131    23.14       NA      0.427372        490.64     4.96       
+   2     DRB1_0301      MILRSRFLDARRKRC    2   LRSRFLDAR     0.420   Var2406230022      0.012138    32.64       NA      0.400712        654.69     6.51       
+   4     DRB1_0301      LRSRFLDARRKRCNF    4   FLDARRKRC     0.620   Var2406230022      0.010677    34.77       NA      0.371071        902.23     8.74       
+   5     DRB1_0301      RSRFLDARRKRCNFS    3   FLDARRKRC     0.707   Var2406230022      0.010553    34.95       NA      0.331326       1387.01    13.04       
+   3     DRB1_0301      ILRSRFLDARRKRCN    5   FLDARRKRC     0.480   Var2406230022      0.009860    36.12       NA      0.381249        808.15     7.91       
+  15     DRB1_0301      RCNFSKQATEVLNEY    3   FSKQATEVL     0.800   Var2406230022      0.004182    52.06       NA      0.193632       6153.17    48.56       
+  14     DRB1_0301      KRCNFSKQATEVLNE    4   FSKQATEVL     0.840   Var2406230022      0.003470    55.62       NA      0.183859       6839.46    52.52       
+   6     DRB1_0301      SRFLDARRKRCNFSK    2   FLDARRKRC     0.713   Var2406230022      0.003160    57.60       NA      0.287301       2233.32    20.31       
+  17     DRB1_0301      NFSKQATEVLNEYFY    4   QATEVLNEY     0.487   Var2406230022      0.002554    61.83       NA      0.210984       5099.91    41.88       
+  16     DRB1_0301      CNFSKQATEVLNEYF    5   QATEVLNEY     0.420   Var2406230022      0.002134    65.22       NA      0.195112       6055.42    47.96       
+  13     DRB1_0301      RKRCNFSKQATEVLN    5   FSKQATEVL     0.600   Var2406230022      0.001942    67.12       NA      0.197084       5927.59    47.15       
+  12     DRB1_0301      RRKRCNFSKQATEVL    6   FSKQATEVL     0.287   Var2406230022      0.000656    85.07       NA      0.195647       6020.47    47.74       
+  11     DRB1_0301      ARRKRCNFSKQATEV    3   KRCNFSKQA     0.513   Var2406230022      0.000654    85.11       NA      0.162267       8639.37    61.50       
+   7     DRB1_0301      RFLDARRKRCNFSKQ    1   FLDARRKRC     0.500   Var2406230022      0.000618    85.90       NA      0.235623       3906.47    33.57       
+  10     DRB1_0301      DARRKRCNFSKQATE    4   KRCNFSKQA     0.580   Var2406230022      0.000550    87.39       NA      0.144891      10426.33    68.86       
+   9     DRB1_0301      LDARRKRCNFSKQAT    5   KRCNFSKQA     0.520   Var2406230022      0.000350    92.13       NA      0.145374      10371.99    68.66       
+   8     DRB1_0301      FLDARRKRCNFSKQA    6   KRCNFSKQA     0.320   Var2406230022      0.000294    93.61       NA      0.164860       8400.36    60.40       
+--------------------------------------------------------------------------------------------------------------------------------------------
+Number of strong binders: 0 Number of weak binders: 0
+--------------------------------------------------------------------------------------------------------------------------------------------

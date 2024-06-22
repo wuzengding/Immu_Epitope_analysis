@@ -23,6 +23,7 @@ class NetMHCSummarizer:
         self.homo_netmhciipan_df = None
         self.homo_netmhciipan_faa_file = None
         self.id_transformation_dict = {}
+        self.all_format_input = True
 
     def get_transmembrane_region(self, peptide_id, pos, peptide_length):
         midle_pos = pos + (peptide_length // 2)
@@ -90,23 +91,28 @@ class NetMHCSummarizer:
         #transcript_id_pattern = r'(\S+)\('
         #gene_name_pattern = r'\((.*?)\)'
         #hgvs_p_pattern = r'p\.\w+\d+\w+'
-
         with open(id_transformation_file, 'r') as f:
             for line in f.readlines():
                 if line.startswith(">Var"):
                     identity_transformated = line.split('->')[1].split()[0].lstrip('>')
-                    identity_origin = line.split('->')[0].split()[0]
+                    identity_origin = line.split('->')[0].lstrip('>')
                     #gene_match = re.search(gene_name_pattern, identity_origin)
                     #gene_name = gene_match.group(1) if gene_match else None
                     #transcript_match = re.search(transcript_id_pattern + re.escape(gene_name) + r'\)', identity_origin)
                     #transcript_id = transcript_match.group(1) if transcript_match else None
                     #hgvs_p_match = re.search(hgvs_p_pattern, identity_origin)
                     #hgvs_p = hgvs_p_match.group(0) if hgvs_p_match else None
-                    transcript_id = identity_origin.split('|')[1]
-                    gene_name = identity_origin.split('|')[2]
-                    hgvs_p = identity_origin.split('|')[3]
-                    self.id_transformation_dict[identity_transformated] = [identity_origin, gene_name, transcript_id, hgvs_p]
-
+                    identity_origin_item = identity_origin.split('|')
+                    if len(identity_origin_item) == 5  and identity_origin_item[0] == 'Var' : 
+                        '''## eg: Var|NM_024121.3|TMEM185B|p.Ala62Val|p.A62V -> >Var2406220001 '''
+                        transcript_id = identity_origin_item[1]
+                        gene_name = identity_origin_item[2]
+                        hgvs_p = identity_origin_item[3]
+                        self.id_transformation_dict[identity_transformated] = [identity_origin, gene_name, transcript_id, hgvs_p]
+                    else:
+                        self.all_format_input = False
+                        self.id_transformation_dict[identity_transformated] = [identity_origin]
+        
     def load_tmr_data(self):
         tmr_file = os.path.join(self.data_dir, '04.TransMembrane.DeepTMHMM', 'TMRs.gff3')
         with open(tmr_file, 'r') as f:
@@ -190,14 +196,21 @@ class NetMHCSummarizer:
 
         # 还原 identity
         def restore_identity(df):
-            df['Gene_name'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][1] if x in self.id_transformation_dict else '-')
-            df['Transcript_id'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][2] if x in self.id_transformation_dict else '-')
-            df['HGVS_p'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][3] if x in self.id_transformation_dict else '-')
-            df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
-            columns = list(df.columns)
-            new_order = ['Gene_name', 'Transcript_id', 'HGVS_p'] + columns[:columns.index('Gene_name')] + columns[columns.index('Gene_name')+3:]
+            if self.all_format_input == True:
+                df['Gene_name'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][1] if x in self.id_transformation_dict else '-')
+                df['Transcript_id'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][2] if x in self.id_transformation_dict else '-')
+                df['HGVS_p'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][3] if x in self.id_transformation_dict else '-')
+                df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
+                columns = list(df.columns)
+                new_order = ['Gene_name', 'Transcript_id', 'HGVS_p'] + columns[:columns.index('Gene_name')] + columns[columns.index('Gene_name')+3:]
+            else:
+                df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
+                columns = list(df.columns)
+                columns.remove('Identity')
+                new_order = ['Identity'] + columns
             return df[new_order]
-        
+
+        print(self.netmhcpan_df['Identity'].tolist())
         self.netmhcpan_df = restore_identity(self.netmhcpan_df)
         self.netmhciipan_df = restore_identity(self.netmhciipan_df)
 
@@ -206,8 +219,8 @@ class NetMHCSummarizer:
         self.netmhciipan_df = self.netmhciipan_df[self.netmhciipan_df['Peptide'] != self.netmhciipan_df['Wildtype_peptide']]
 
         # 删除不需要的列
-        netmhcpan_columns_to_drop = ['Identity', 'Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos']
-        netmhciipan_columns_to_drop = ['Identity', 'Of', 'Exp_Bind', 'Pos']
+        netmhcpan_columns_to_drop = ['Identity', 'Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos'] if (self.all_format_input == True) else ['Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos']
+        netmhciipan_columns_to_drop = ['Identity', 'Of', 'Exp_Bind', 'Pos'] if (self.all_format_input == True) else ['Of', 'Exp_Bind', 'Pos'] 
         self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
         self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
 
