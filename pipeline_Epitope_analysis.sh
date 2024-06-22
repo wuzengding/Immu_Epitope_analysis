@@ -45,11 +45,13 @@ if [ -z "${faa_file}" ] || [ -z "${HLA_genotypes}" ] || [ -z "${output_dir}" ] |
   usage
 fi
 
+output_dir=$(realpath ${output_dir})
 # 打印解析后的参数
 echo "faa_file: ${faa_file}"
 echo "HLA_genotypes: ${HLA_genotypes}"
 echo "output_dir: ${output_dir}"
 echo "output_prefix: ${output_prefix}"
+
 
 # 示例：使用解析后的参数执行命令
 # command_to_run -f "${faa_file}"  -h "${HLA_genotypes}" -o "${output_dir}/${output_prefix}_result"
@@ -308,9 +310,9 @@ fi
 
 
 ###########      Step5: enzyme digestions prediction   ###############
-outputdir=$(dirname $(realpath ${output_dir}))
-echo ${outputdir}
-cd ${outputdir}
+
+echo ${output_dir}
+cd ${output_dir}
 if [ -e ${output_dir}/05.EnzymeDigest ];then
     echo "Step5:  EnzymeDigest existed, this step passed!"
 else
@@ -324,3 +326,10 @@ else
 fi
 
 ###############     summary results             ##################
+echo $(dirname ${output_dir})
+python ${basedir}/script/summarize.py \
+    -d ${output_dir} \
+    -o ${output_dir}/Deliverable \
+    -p ${output_prefix} \
+    -n ${output_prefix} \
+    -m 'all'

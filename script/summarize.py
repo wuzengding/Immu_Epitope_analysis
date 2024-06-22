@@ -87,21 +87,24 @@ class NetMHCSummarizer:
 
     def load_id_transformation(self):
         id_transformation_file = os.path.join(self.data_dir, '01.protein_sequence', f'{self.sample_name}_id_transformation.txt')
-        transcript_id_pattern = r'(\S+)\('
-        gene_name_pattern = r'\((.*?)\)'
-        hgvs_p_pattern = r'p\.\w+\d+\w+'
+        #transcript_id_pattern = r'(\S+)\('
+        #gene_name_pattern = r'\((.*?)\)'
+        #hgvs_p_pattern = r'p\.\w+\d+\w+'
 
         with open(id_transformation_file, 'r') as f:
             for line in f.readlines():
                 if line.startswith(">Var"):
-                    identity_transformated = line.split('->')[1].strip().lstrip('>')
-                    identity_origin = line.split('->')[0].split()[1]
-                    gene_match = re.search(gene_name_pattern, identity_origin)
-                    gene_name = gene_match.group(1) if gene_match else None
-                    transcript_match = re.search(transcript_id_pattern + re.escape(gene_name) + r'\)', identity_origin)
-                    transcript_id = transcript_match.group(1) if transcript_match else None
-                    hgvs_p_match = re.search(hgvs_p_pattern, identity_origin)
-                    hgvs_p = hgvs_p_match.group(0) if hgvs_p_match else None
+                    identity_transformated = line.split('->')[1].split()[0].lstrip('>')
+                    identity_origin = line.split('->')[0].split()[0]
+                    #gene_match = re.search(gene_name_pattern, identity_origin)
+                    #gene_name = gene_match.group(1) if gene_match else None
+                    #transcript_match = re.search(transcript_id_pattern + re.escape(gene_name) + r'\)', identity_origin)
+                    #transcript_id = transcript_match.group(1) if transcript_match else None
+                    #hgvs_p_match = re.search(hgvs_p_pattern, identity_origin)
+                    #hgvs_p = hgvs_p_match.group(0) if hgvs_p_match else None
+                    transcript_id = identity_origin.split('|')[1]
+                    gene_name = identity_origin.split('|')[2]
+                    hgvs_p = identity_origin.split('|')[3]
                     self.id_transformation_dict[identity_transformated] = [identity_origin, gene_name, transcript_id, hgvs_p]
 
     def load_tmr_data(self):
@@ -194,7 +197,7 @@ class NetMHCSummarizer:
             columns = list(df.columns)
             new_order = ['Gene_name', 'Transcript_id', 'HGVS_p'] + columns[:columns.index('Gene_name')] + columns[columns.index('Gene_name')+3:]
             return df[new_order]
-
+        
         self.netmhcpan_df = restore_identity(self.netmhcpan_df)
         self.netmhciipan_df = restore_identity(self.netmhciipan_df)
 
@@ -208,15 +211,14 @@ class NetMHCSummarizer:
         self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
         self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
 
-        output_deliverable_dir = os.path.join(self.output_dir, 'Deliverable')
-        if os.path.exists(output_deliverable_dir):
-            shutil.rmtree(output_deliverable_dir)
-        os.mkdir(output_deliverable_dir)
+        if os.path.exists(self.output_dir):
+            shutil.rmtree(self.output_dir)
+        os.mkdir(self.output_dir)
 
         if self.mhc_genotype in ['mhci', 'all']:
-            self.netmhcpan_df.to_csv(os.path.join(output_deliverable_dir, f'{self.prefix}_netMHCpan_deliverable.csv'), index=False)
+            self.netmhcpan_df.to_csv(os.path.join(self.output_dir, f'{self.prefix}_netMHCpan_deliverable.csv'), index=False)
         if self.mhc_genotype in ['mhcii', 'all']:
-            self.netmhciipan_df.to_csv(os.path.join(output_deliverable_dir, f'{self.prefix}_netMHCIIpan_deliverable.csv'), index=False)
+            self.netmhciipan_df.to_csv(os.path.join(self.output_dir, f'{self.prefix}_netMHCIIpan_deliverable.csv'), index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Summarize netMHC results.')
