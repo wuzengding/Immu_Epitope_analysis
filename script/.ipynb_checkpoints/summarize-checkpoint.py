@@ -119,12 +119,13 @@ class NetMHCSummarizer:
             self.tmr_data = f.readlines()
 
     def load_homo_faa(self, homo_netmhc_faa_file):
-        self.homo_netmhc_faa_list = []
+        homo_netmhc_faa_list = []
         for record in SeqIO.parse(homo_netmhc_faa_file, 'fasta'):
             pep_id = record.id
             pep_description = record.description.split("_")[-1]
             pep_seq = str(record.seq)
-            self.homo_netmhc_faa_list.append([pep_id, pep_seq, pep_description])
+            homo_netmhc_faa_list.append([pep_id, pep_seq, pep_description])
+        return homo_netmhc_faa_list
 
     def load_dataframes(self):
         if self.mhc_genotype in ['mhci', 'all']:
@@ -133,7 +134,7 @@ class NetMHCSummarizer:
             if os.path.exists(ref_netmhcpan_file):
                 self.ref_netmhcpan_df = pd.read_csv(ref_netmhcpan_file)
             self.homo_netmhcpan_df = pd.read_csv(os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCpan.csv'))
-            self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCpan_homologous.faa'))
+            self.homo_netmhcpan_faa_list = self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCpan_homologous.faa'))
 
         if self.mhc_genotype in ['mhcii', 'all']:
             self.netmhciipan_df = pd.read_csv(os.path.join(self.data_dir, '02.protein_antigen_prediction_var', 'parsed', f'{self.sample_name}_netMHCIIpan.csv'))
@@ -141,7 +142,7 @@ class NetMHCSummarizer:
             if os.path.exists(ref_netmhciipan_file):
                 self.ref_netmhciipan_df = pd.read_csv(ref_netmhciipan_file)
             self.homo_netmhciipan_df = pd.read_csv(os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCIIpan.csv'))
-            self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCIIpan_homologous.faa'))
+            self.homo_netmhciipan_faa_list = self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCIIpan_homologous.faa'))
 
     def summarize(self):
         self.load_id_transformation()
@@ -157,7 +158,7 @@ class NetMHCSummarizer:
             self.netmhcpan_df['Homo_peptide'] = '-'
             self.homo_netmhcpan_df['Identity'] = self.homo_netmhcpan_df['Identity'].str.split('_').str[0]
             results = self.netmhcpan_df.loc[self.netmhcpan_df['Wildtype_peptide'] == '-', ['Peptide', 'Identity']].apply(
-                lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhcpan_df, self.homo_netmhc_faa_list), 
+                lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhcpan_df, self.homo_netmhcpan_faa_list), 
                 axis=1, result_type='expand')
 
             for idx, (homo_exist, homo_peptide, homo_id) in results.iterrows():
@@ -210,7 +211,6 @@ class NetMHCSummarizer:
                 new_order = ['Identity'] + columns
             return df[new_order]
 
-        print(self.netmhcpan_df['Identity'].tolist())
         self.netmhcpan_df = restore_identity(self.netmhcpan_df)
         self.netmhciipan_df = restore_identity(self.netmhciipan_df)
 
