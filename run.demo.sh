@@ -1,1 +1,1 @@
-bash pipeline_Epitope_analysis.sh -f ./data/test_data/COAD_0009689008.ref_variants.faa  -l "HLA-A11:01,HLA-A33:03,HLA-B52:01,HLA-B58:,HLA-C03:02,HLA-C07:02,DRB1_0301" -o ./data/test_data_result -p "0009689008"
+bash pipeline_Epitope_analysis.sh -f /mnt/user/wzd/05.pipeline_dev/pipeline_SAKit_v1.0/tools/0009689008.fusion_peptides.fasta  -l "HLA-A11:01,HLA-A33:03,HLA-B52:01,HLA-B58:,HLA-C03:02,HLA-C07:02,DRB1_0301" -o ./data/test_data_result -p "0009689008"

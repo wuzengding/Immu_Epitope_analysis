@@ -31,6 +31,35 @@ class FastaProcessor:
                 elif self.var_sequences and self.var_sequences[-1][1] == '':
                     self.var_sequences[-1] = (self.var_sequences[-1][0], line.strip())
 
+    def _read_fasta(self):
+        """
+        读取FASTA文件并返回Ref和Var序列列表
+        """
+        with open(self.fasta_file, 'r') as file:
+            lines = file.readlines()
+        self.ref_sequences = []
+        self.var_sequences = []
+        multi_ref = 0
+        for line in lines:
+            if line.startswith('>Ref'):
+                if multi_ref == 0:
+                    self.ref_sequences.append([(line.strip(), '')])
+                    multi_ref += 1
+                elif multi_ref >= 1:
+                    self.ref_sequences[-1].append((line.strip(), ''))
+            elif line.startswith('>Var'):
+                self.var_sequences.append([(line.strip(), '')])
+                multi_ref = 0
+            elif line.startswith(">"):
+                line = ">Ref" + line[1:] 
+                self.var_sequences.append([(line.strip(), '')])
+            else:
+                if self.ref_sequences and self.ref_sequences[-1][-1][1] == '':
+                    self.ref_sequences[-1][-1] = (self.ref_sequences[-1][-1][0], line.strip())
+                elif self.var_sequences and self.var_sequences[-1][-1][1] == '':
+                    self.var_sequences[-1][-1] = (self.var_sequences[-1][-1][0], line.strip())
+
+                    
     def transform_ids(self, sequences, type_):
         """
         转换序列ID并生成新的ID对应关系
@@ -43,6 +72,19 @@ class FastaProcessor:
             id_transformations.append(f"{old_id} -> {new_id}")
         return transformed_sequences, id_transformations
 
+    def _transform_ids(self, sequences, type_):
+        """
+        转换序列ID并生成新的ID对应关系
+        """
+        transformed_sequences = []
+        id_transformations = []
+        for count, old_id_seq_list in enumerate(sequences, start=1):
+            for (old_id, seq) in  old_id_seq_list:
+                new_id = f">{type_}{self.today}{count:04d}"
+                transformed_sequences.append((new_id, seq))
+                id_transformations.append(f"{old_id} -> {new_id}")
+        return transformed_sequences, id_transformations
+        
     def write_fasta(self, sequences, filename):
         """
         将序列写入FASTA文件
@@ -66,11 +108,11 @@ class FastaProcessor:
         主函数：处理FASTA文件并输出结果
         """
         # 读取FASTA文件
-        self.read_fasta()
+        self._read_fasta()
         # 转换Ref序列的ID
-        transformed_ref_sequences, ref_id_transformations = self.transform_ids(self.ref_sequences, 'Ref')
+        transformed_ref_sequences, ref_id_transformations = self._transform_ids(self.ref_sequences, 'Ref')
         # 转换Var序列的ID
-        transformed_var_sequences, var_id_transformations = self.transform_ids(self.var_sequences, 'Var')
+        transformed_var_sequences, var_id_transformations = self._transform_ids(self.var_sequences, 'Var')
        
         '''
         transformed_sequences = transformed_ref_sequences + transformed_var_sequences
