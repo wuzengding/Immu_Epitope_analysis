@@ -24,43 +24,101 @@ class NetMHCSummarizer:
         self.homo_netmhciipan_faa_file = None
         self.id_transformation_dict = {}
         self.all_format_input = True
+        self.var_sequences = {}
+        self.ref_sequences = {}
+
+    def load_source_sequences(self):
+        """Loads the full variant and reference protein sequences from FASTA files."""
+        var_faa_path = os.path.join(self.data_dir, '01.protein_sequence', f'{self.sample_name}_var_seq.faa')
+        ref_faa_path = os.path.join(self.data_dir, '01.protein_sequence', f'{self.sample_name}_ref_seq.faa')
+
+        if os.path.exists(var_faa_path):
+            for record in SeqIO.parse(var_faa_path, "fasta"):
+                self.var_sequences[record.id] = str(record.seq)
+        
+        if os.path.exists(ref_faa_path):
+            for record in SeqIO.parse(ref_faa_path, "fasta"):
+                self.ref_sequences[record.id] = str(record.seq)
+
+    def get_wildtype_peptide_from_source(self, identity, peptide, pos):
+        """
+        Directly extracts the corresponding wild-type peptide from the full
+        reference protein sequence based on the neoantigen's position.
+        """
+        var_seq = self.var_sequences.get(identity)
+        ref_identity = identity.replace('Var', 'Ref')
+        ref_seq = self.ref_sequences.get(ref_identity)
+
+        if not var_seq or not ref_seq:
+            return '-'
+
+        search_start = max(0, pos - 5)
+        
+        try:
+            exact_pos = var_seq.index(peptide, search_start)
+        except ValueError:
+            try:
+                exact_pos = var_seq.index(peptide)
+            except ValueError:
+                return '-'
+        
+        peptide_len = len(peptide)
+        if exact_pos + peptide_len > len(ref_seq):
+            return '-'
+            
+        wildtype_peptide = ref_seq[exact_pos : exact_pos + peptide_len]
+        
+        if wildtype_peptide == peptide:
+            return '-'
+
+        return wildtype_peptide
 
     def get_transmembrane_region(self, peptide_id, pos, peptide_length):
+        """
+        Determines if a peptide is within a transmembrane region based on DeepTMHMM GFF3 output.
+        """
         midle_pos = pos + (peptide_length // 2)
         tmr_region = "-"
-        for i, line in enumerate(self.tmr_data):
+        if not self.tmr_data: 
+            return tmr_region
+            
+        in_record_block = False
+        for line in self.tmr_data:
+            if line.startswith('##'): continue
             if line.startswith(f'# {peptide_id}'):
-                for j in range(i+1, len(self.tmr_data)):
-                    if self.tmr_data[j].startswith('//'):
-                        break
-                    if self.tmr_data[j].startswith("Var"):
-                        fields = self.tmr_data[j].strip().split('\t')
-                        tmr_start, tmr_end = int(fields[2]), int(fields[3])
-                        if tmr_start <= midle_pos < tmr_end:
-                            tmr_region = fields[1]
-        return tmr_region
+                in_record_block = True
+                continue
+            if line.startswith('//'):
+                in_record_block = False
+                continue
+            
+            if in_record_block:
+                # GFF3 feature lines should not start with '#', but we check for safety
+                if line.startswith('#'): continue
+                
+                fields = line.strip().split('\t')
+                
+                # *** FIX STARTS HERE ***
+                # Add a defensive check to ensure the line has enough columns for a GFF feature
+                if len(fields) >= 5:
+                    try:
+                        # GFF3 is 1-based, columns are seqid, source, type, start, end
+                        # fields[0] is seqid, fields[2] is type, fields[3] is start, fields[4] is end
+                        seq_id = fields[0]
+                        if seq_id != peptide_id: continue # Ensure we are still in the correct protein block
 
-    def get_wildtype_peptide(self, identity, peptide, ref_df):
-        similarity_cutoff = 0.75
-        length_diff_cutoff = 4
-        identity = identity.replace('Var', 'Ref')
-        ref_peptides = ref_df.loc[ref_df['Identity'] == identity, 'Peptide'].tolist()
-        if not ref_peptides:
-            return '-'
-        def get_similar_length_peptides(ref_peptides, peptide_length, length_diff):
-            return [ref_peptide for ref_peptide in ref_peptides if (abs(len(ref_peptide) - peptide_length) == length_diff)]
-        peptide_length = len(peptide)
-        length_diff = 0
-        while True:
-            similar_length_peptides = get_similar_length_peptides(ref_peptides, peptide_length, length_diff)
-            if similar_length_peptides:
-                similarity_scores = [SequenceMatcher(None, peptide, ref_peptide).ratio() for ref_peptide in similar_length_peptides]
-                if max(similarity_scores) >= similarity_cutoff:
-                    max_similarity_idx = similarity_scores.index(max(similarity_scores))
-                    return similar_length_peptides[max_similarity_idx]
-            length_diff += 1
-            if (length_diff > peptide_length + max(len(r) for r in ref_peptides)) or (length_diff >= length_diff_cutoff):
-                return '-'
+                        tmr_start, tmr_end = int(fields[3]), int(fields[4])
+                        
+                        # GFF3 coordinates are 1-based and inclusive. pos is 0-based.
+                        # So we check if (pos+1) is within [start, end]
+                        if tmr_start <= midle_pos + 1 <= tmr_end:
+                            tmr_region = fields[2] # The 'type' of region (e.g., TRANSMEM)
+                            break # Found the region, no need to check further for this peptide
+                    except (ValueError, IndexError):
+                        # If conversion to int fails or another unexpected index error occurs, skip this malformed line
+                        continue
+                # *** FIX ENDS HERE ***
+        return tmr_region
 
     def get_homologous_peptide(self, identity, peptide, homo_df, homo_faa_list):
         identity = identity.replace('Var', 'Ref')
@@ -77,34 +135,32 @@ class NetMHCSummarizer:
 
     def get_affinity(self, wildtype_peptide, homo_peptide, identity, mhc_genotype, ref_df, keyword):
         identity = identity.replace('Var', 'Ref')
-        if wildtype_peptide != '-':
-            affinity = ref_df.loc[(ref_df['Peptide'] == wildtype_peptide) & (ref_df['Identity'] == identity) & (ref_df['MHC'] == mhc_genotype), keyword].values
-            return affinity[0] if len(affinity) > 0 else '-'
-        elif homo_peptide != 'N':
-            affinity = ref_df.loc[(ref_df['Peptide'] == homo_peptide) & (ref_df['Identity'] == identity) & (ref_df['MHC'] == mhc_genotype), keyword].values
-            return affinity[0] if len(affinity) > 0 else '-'
-        else:
-            return '-'
+        competitor_peptide = wildtype_peptide if wildtype_peptide != '-' else homo_peptide
+        
+        if competitor_peptide not in ['-', 'N']:
+            affinity_values = ref_df.loc[
+                (ref_df['Peptide'] == competitor_peptide) & 
+                (ref_df['Identity'] == identity) & 
+                (ref_df['MHC'] == mhc_genotype), keyword
+            ].values
+            if len(affinity_values) > 0:
+                return affinity_values[0]
+        
+        return '-'
 
     def load_id_transformation(self):
         id_transformation_file = os.path.join(self.data_dir, '01.protein_sequence', f'{self.sample_name}_id_transformation.txt')
-        #transcript_id_pattern = r'(\S+)\('
-        #gene_name_pattern = r'\((.*?)\)'
-        #hgvs_p_pattern = r'p\.\w+\d+\w+'
+        if not os.path.exists(id_transformation_file): return
+
         with open(id_transformation_file, 'r') as f:
             for line in f.readlines():
-                if line.startswith(">Var"):
-                    identity_transformated = line.split('->')[1].split()[0].lstrip('>')
-                    identity_origin = line.split('->')[0].lstrip('>')
-                    #gene_match = re.search(gene_name_pattern, identity_origin)
-                    #gene_name = gene_match.group(1) if gene_match else None
-                    #transcript_match = re.search(transcript_id_pattern + re.escape(gene_name) + r'\)', identity_origin)
-                    #transcript_id = transcript_match.group(1) if transcript_match else None
-                    #hgvs_p_match = re.search(hgvs_p_pattern, identity_origin)
-                    #hgvs_p = hgvs_p_match.group(0) if hgvs_p_match else None
+                if line.startswith(">Var") and '->' in line:
+                    parts = line.strip().split('->')
+                    identity_origin = parts[0].lstrip('>')
+                    identity_transformated = parts[1].split()[0].lstrip('>')
+                    
                     identity_origin_item = identity_origin.split('|')
                     if len(identity_origin_item) == 5  and identity_origin_item[0] == 'Var' : 
-                        '''## eg: Var|NM_024121.3|TMEM185B|p.Ala62Val|p.A62V -> >Var2406220001 '''
                         transcript_id = identity_origin_item[1]
                         gene_name = identity_origin_item[2]
                         hgvs_p = identity_origin_item[3]
@@ -115,11 +171,15 @@ class NetMHCSummarizer:
         
     def load_tmr_data(self):
         tmr_file = os.path.join(self.data_dir, '04.TransMembrane.DeepTMHMM', 'TMRs.gff3')
+        if not os.path.exists(tmr_file): 
+            self.tmr_data = None
+            return
         with open(tmr_file, 'r') as f:
             self.tmr_data = f.readlines()
 
     def load_homo_faa(self, homo_netmhc_faa_file):
         homo_netmhc_faa_list = []
+        if not os.path.exists(homo_netmhc_faa_file): return homo_netmhc_faa_list
         for record in SeqIO.parse(homo_netmhc_faa_file, 'fasta'):
             pep_id = record.id
             pep_description = record.description.split("_")[-1]
@@ -129,117 +189,138 @@ class NetMHCSummarizer:
 
     def load_dataframes(self):
         if self.mhc_genotype in ['mhci', 'all']:
-            self.netmhcpan_df = pd.read_csv(os.path.join(self.data_dir, '02.protein_antigen_prediction_var', 'parsed', f'{self.sample_name}_netMHCpan.csv'))
+            netmhcpan_csv = os.path.join(self.data_dir, '02.protein_antigen_prediction_var', 'parsed', f'{self.sample_name}_netMHCpan.csv')
+            if os.path.exists(netmhcpan_csv): self.netmhcpan_df = pd.read_csv(netmhcpan_csv)
+
             ref_netmhcpan_file = os.path.join(self.data_dir, '02.protein_antigen_prediction_ref', 'parsed', f'{self.sample_name}_netMHCpan.csv')
-            if os.path.exists(ref_netmhcpan_file):
-                self.ref_netmhcpan_df = pd.read_csv(ref_netmhcpan_file)
-            self.homo_netmhcpan_df = pd.read_csv(os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCpan.csv'))
+            if os.path.exists(ref_netmhcpan_file): self.ref_netmhcpan_df = pd.read_csv(ref_netmhcpan_file, low_memory=False) # FIX: Add low_memory=False
+
+            homo_csv = os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCpan.csv')
+            if os.path.exists(homo_csv): self.homo_netmhcpan_df = pd.read_csv(homo_csv)
             self.homo_netmhcpan_faa_list = self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCpan_homologous.faa'))
 
         if self.mhc_genotype in ['mhcii', 'all']:
-            self.netmhciipan_df = pd.read_csv(os.path.join(self.data_dir, '02.protein_antigen_prediction_var', 'parsed', f'{self.sample_name}_netMHCIIpan.csv'))
+            netmhciipan_csv = os.path.join(self.data_dir, '02.protein_antigen_prediction_var', 'parsed', f'{self.sample_name}_netMHCIIpan.csv')
+            if os.path.exists(netmhciipan_csv): self.netmhciipan_df = pd.read_csv(netmhciipan_csv)
+            
             ref_netmhciipan_file = os.path.join(self.data_dir, '02.protein_antigen_prediction_ref', 'parsed', f'{self.sample_name}_netMHCIIpan.csv')
-            if os.path.exists(ref_netmhciipan_file):
-                self.ref_netmhciipan_df = pd.read_csv(ref_netmhciipan_file)
-            self.homo_netmhciipan_df = pd.read_csv(os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCIIpan.csv'))
+            if os.path.exists(ref_netmhciipan_file): self.ref_netmhciipan_df = pd.read_csv(ref_netmhciipan_file, low_memory=False) # FIX: Add low_memory=False
+            
+            homo_csv = os.path.join(self.data_dir, '03.homologous', 'parsed', f'{self.sample_name}_homologous_netMHCIIpan.csv')
+            if os.path.exists(homo_csv): self.homo_netmhciipan_df = pd.read_csv(homo_csv)
             self.homo_netmhciipan_faa_list = self.load_homo_faa(os.path.join(self.data_dir, '03.homologous', f'{self.sample_name}_netMHCIIpan_homologous.faa'))
 
     def summarize(self):
         self.load_id_transformation()
         self.load_tmr_data()
         self.load_dataframes()
-        if self.mhc_genotype in ['mhci', 'all']:
+        self.load_source_sequences() 
+
+        if self.mhc_genotype in ['mhci', 'all'] and self.netmhcpan_df is not None:
             self.netmhcpan_df['TransMemb'] = self.netmhcpan_df.apply(lambda row: self.get_transmembrane_region(row['Identity'], row['Pos'], len(row['Peptide'])), axis=1)
             self.netmhcpan_df['InCutmerRate'] = '-'
             self.netmhcpan_df['InCutmerRegion'] = '-'
-            self.netmhcpan_df['Wildtype_peptide'] = self.netmhcpan_df.apply(lambda row: self.get_wildtype_peptide(row['Identity'], row['Peptide'], self.ref_netmhcpan_df), axis=1)
-            self.netmhcpan_df['HomoExsit'] = '-'
+            self.netmhcpan_df['Wildtype_peptide'] = self.netmhcpan_df.apply(
+                lambda row: self.get_wildtype_peptide_from_source(row['Identity'], row['Peptide'], row['Pos']), axis=1
+            )
+            self.netmhcpan_df['HomoExsit'] = 'N'
             self.netmhcpan_df['Homo_id'] = '-'
             self.netmhcpan_df['Homo_peptide'] = '-'
-            self.homo_netmhcpan_df['Identity'] = self.homo_netmhcpan_df['Identity'].str.split('_').str[0]
-            results = self.netmhcpan_df.loc[self.netmhcpan_df['Wildtype_peptide'] == '-', ['Peptide', 'Identity']].apply(
-                lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhcpan_df, self.homo_netmhcpan_faa_list), 
-                axis=1, result_type='expand')
+            
+            if self.homo_netmhcpan_df is not None:
+                self.homo_netmhcpan_df['Identity'] = self.homo_netmhcpan_df['Identity'].str.split('_').str[0]
+                results = self.netmhcpan_df.loc[self.netmhcpan_df['Wildtype_peptide'] == '-', ['Peptide', 'Identity']].apply(
+                    lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhcpan_df, self.homo_netmhcpan_faa_list), 
+                    axis=1, result_type='expand')
+                if not results.empty:
+                    results.columns = ['HomoExsit', 'Homo_peptide', 'Homo_id']
+                    self.netmhcpan_df.update(results)
 
-            for idx, (homo_exist, homo_peptide, homo_id) in results.iterrows():
-                self.netmhcpan_df.loc[idx, 'HomoExsit'] = homo_exist
-                self.netmhcpan_df.loc[idx, 'Homo_peptide'] = homo_peptide
-                self.netmhcpan_df.loc[idx, 'Homo_id'] = homo_id
-            self.netmhcpan_df['Aff(nM)_competitor'] = self.netmhcpan_df.apply(lambda row: self.get_affinity(row['Wildtype_peptide'], row['Homo_peptide'], row['Identity'], row["MHC"], self.ref_netmhcpan_df, 'Aff(nM)'), axis=1)
-
-        if self.mhc_genotype in ['mhcii', 'all']:
+            if self.ref_netmhcpan_df is not None:
+                self.netmhcpan_df['Aff(nM)_competitor'] = self.netmhcpan_df.apply(lambda row: self.get_affinity(row['Wildtype_peptide'], row['Homo_peptide'], row['Identity'], row["MHC"], self.ref_netmhcpan_df, 'Aff(nM)'), axis=1)
+                self.netmhcpan_df['Aff(nM)_competitor/Aff(nM)'] = self.netmhcpan_df.apply(
+                    lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Aff(nM)']), 2) if pd.notna(row['Aff(nM)_competitor']) and str(row['Aff(nM)_competitor']) != '-' and pd.notna(row['Aff(nM)']) else '-', axis=1
+                )
+        
+        if self.mhc_genotype in ['mhcii', 'all'] and self.netmhciipan_df is not None:
             self.netmhciipan_df['TransMemb'] = self.netmhciipan_df.apply(lambda row: self.get_transmembrane_region(row['Identity'], row['Pos'], len(row['Peptide'])), axis=1)
             self.netmhciipan_df['InCutmerRate'] = '-'
             self.netmhciipan_df['InCutmerRegion'] = '-'
-            self.netmhciipan_df['Wildtype_peptide'] = self.netmhciipan_df.apply(lambda row: self.get_wildtype_peptide(row['Identity'], row['Peptide'], self.ref_netmhciipan_df), axis=1)
-            self.netmhciipan_df['HomoExsit'] = '-'
+            self.netmhciipan_df['Wildtype_peptide'] = self.netmhciipan_df.apply(
+                lambda row: self.get_wildtype_peptide_from_source(row['Identity'], row['Peptide'], row['Pos']), axis=1
+            )
+            self.netmhciipan_df['HomoExsit'] = 'N'
             self.netmhciipan_df['Homo_id'] = '-'
             self.netmhciipan_df['Homo_peptide'] = '-'
-            self.homo_netmhciipan_df['Identity'] = self.homo_netmhciipan_df['Identity'].str.split('_').str[0]
-            results = self.netmhciipan_df.loc[self.netmhciipan_df['Wildtype_peptide'] == '-', ['Peptide', 'Identity']].apply(
-                lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhciipan_df, self.homo_netmhciipan_faa_list), 
-                axis=1, result_type='expand'
-            )
-            for idx, (homo_exist, homo_peptide, homo_id) in results.iterrows():
-                self.netmhciipan_df.loc[idx, 'HomoExsit'] = homo_exist
-                self.netmhciipan_df.loc[idx, 'Homo_peptide'] = homo_peptide
-                self.netmhciipan_df.loc[idx, 'Homo_id'] = homo_id
             
-            self.netmhciipan_df['Aff(nM)_competitor'] = self.netmhciipan_df.apply(lambda row: self.get_affinity(row['Wildtype_peptide'], row['Homo_peptide'], row['Identity'], row["MHC"], self.ref_netmhciipan_df, 'Affinity(nM)'), axis=1)
+            if self.homo_netmhciipan_df is not None:
+                self.homo_netmhciipan_df['Identity'] = self.homo_netmhciipan_df['Identity'].str.split('_').str[0]
+                results = self.netmhciipan_df.loc[self.netmhciipan_df['Wildtype_peptide'] == '-', ['Peptide', 'Identity']].apply(
+                    lambda row: self.get_homologous_peptide(row['Identity'], row['Peptide'], self.homo_netmhciipan_df, self.homo_netmhciipan_faa_list), 
+                    axis=1, result_type='expand'
+                )
+                if not results.empty:
+                    results.columns = ['HomoExsit', 'Homo_peptide', 'Homo_id']
+                    self.netmhciipan_df.update(results)
+            
+            if self.ref_netmhciipan_df is not None:
+                self.netmhciipan_df['Aff(nM)_competitor'] = self.netmhciipan_df.apply(lambda row: self.get_affinity(row['Wildtype_peptide'], row['Homo_peptide'], row['Identity'], row["MHC"], self.ref_netmhciipan_df, 'Affinity(nM)'), axis=1)
+                self.netmhciipan_df['Aff(nM)_competitor/Affinity(nM)'] = self.netmhciipan_df.apply(
+                    lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Affinity(nM)']), 2) if pd.notna(row['Aff(nM)_competitor']) and str(row['Aff(nM)_competitor']) != '-' and pd.notna(row['Affinity(nM)']) else '-', axis=1
+                )
 
-        # 计算 Aff(nM)_competitor/Aff(nM) 的比值
-        self.netmhcpan_df['Aff(nM)_competitor/Aff(nM)'] = self.netmhcpan_df.apply(
-            lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Aff(nM)']), 2) if row['Aff(nM)_competitor'] != '-' and row['Aff(nM)'] != '-' else '-', axis=1
-        )
-        self.netmhciipan_df['Aff(nM)_competitor/Affinity(nM)'] = self.netmhciipan_df.apply(
-            lambda row: round(float(row['Aff(nM)_competitor']) / float(row['Affinity(nM)']), 2) if row['Aff(nM)_competitor'] != '-' and row['Affinity(nM)'] != '-' else '-', axis=1
-        )
-
-        # 还原 identity
         def restore_identity(df):
-            if self.all_format_input == True:
-                df['Gene_name'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][1] if x in self.id_transformation_dict else '-')
-                df['Transcript_id'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][2] if x in self.id_transformation_dict else '-')
-                df['HGVS_p'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][3] if x in self.id_transformation_dict else '-')
-                df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
-                columns = list(df.columns)
-                new_order = ['Gene_name', 'Transcript_id', 'HGVS_p'] + columns[:columns.index('Gene_name')] + columns[columns.index('Gene_name')+3:]
-            else:
-                df['Identity'] = df['Identity'].apply(lambda x: self.id_transformation_dict[x][0] if x in self.id_transformation_dict else x)
-                columns = list(df.columns)
-                columns.remove('Identity')
-                new_order = ['Identity'] + columns
-            return df[new_order]
-
+            if df is None: return None
+            df['Identity_raw'] = df['Identity']
+            
+            if self.all_format_input:
+                df['Gene_name'] = df['Identity_raw'].apply(lambda x: self.id_transformation_dict.get(x, ['-','-','-','-'])[1])
+                df['Transcript_id'] = df['Identity_raw'].apply(lambda x: self.id_transformation_dict.get(x, ['-','-','-','-'])[2])
+                df['HGVS_p'] = df['Identity_raw'].apply(lambda x: self.id_transformation_dict.get(x, ['-','-','-','-'])[3])
+            
+            df['Identity'] = df['Identity_raw'].apply(lambda x: self.id_transformation_dict.get(x, [x])[0])
+            
+            df.drop(columns=['Identity_raw'], inplace=True)
+            
+            cols = list(df.columns)
+            if self.all_format_input:
+                new_cols = ['Gene_name', 'Transcript_id', 'HGVS_p', 'Identity']
+                ordered_cols = new_cols + [c for c in cols if c not in new_cols]
+                return df[ordered_cols]
+            return df
+        
         self.netmhcpan_df = restore_identity(self.netmhcpan_df)
         self.netmhciipan_df = restore_identity(self.netmhciipan_df)
-
-        # 删除 Peptide 与 Wildtype_peptide 完全相同的行
-        self.netmhcpan_df = self.netmhcpan_df[self.netmhcpan_df['Peptide'] != self.netmhcpan_df['Wildtype_peptide']]
-        self.netmhciipan_df = self.netmhciipan_df[self.netmhciipan_df['Peptide'] != self.netmhciipan_df['Wildtype_peptide']]
-
-        # 删除不需要的列
-        netmhcpan_columns_to_drop = ['Identity', 'Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos'] if (self.all_format_input == True) else ['Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos']
-        netmhciipan_columns_to_drop = ['Identity', 'Of', 'Exp_Bind', 'Pos'] if (self.all_format_input == True) else ['Of', 'Exp_Bind', 'Pos'] 
-        self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
-        self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
+        
+        if self.netmhcpan_df is not None:
+            self.netmhcpan_df = self.netmhcpan_df[self.netmhcpan_df['Wildtype_peptide'] != '-']
+        if self.netmhciipan_df is not None:
+            self.netmhciipan_df = self.netmhciipan_df[self.netmhciipan_df['Wildtype_peptide'] != '-']
+            
+        if self.netmhcpan_df is not None:
+            netmhcpan_columns_to_drop = ['Of', 'Gp', 'Gl', 'Ip', 'Il', 'Pos']
+            self.netmhcpan_df.drop(columns=[col for col in netmhcpan_columns_to_drop if col in self.netmhcpan_df.columns], inplace=True)
+        if self.netmhciipan_df is not None:
+            netmhciipan_columns_to_drop = ['Of', 'Exp_Bind', 'Pos', 'Core_Rel']
+            self.netmhciipan_df.drop(columns=[col for col in netmhciipan_columns_to_drop if col in self.netmhciipan_df.columns], inplace=True)
 
         if os.path.exists(self.output_dir):
             shutil.rmtree(self.output_dir)
-        os.mkdir(self.output_dir)
+        os.makedirs(self.output_dir, exist_ok=True)
 
-        if self.mhc_genotype in ['mhci', 'all']:
+        if self.mhc_genotype in ['mhci', 'all'] and self.netmhcpan_df is not None and not self.netmhcpan_df.empty:
             self.netmhcpan_df.to_csv(os.path.join(self.output_dir, f'{self.prefix}_netMHCpan_deliverable.csv'), index=False)
-        if self.mhc_genotype in ['mhcii', 'all']:
+        if self.mhc_genotype in ['mhcii', 'all'] and self.netmhciipan_df is not None and not self.netmhciipan_df.empty:
             self.netmhciipan_df.to_csv(os.path.join(self.output_dir, f'{self.prefix}_netMHCIIpan_deliverable.csv'), index=False)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Summarize netMHC results.')
-    parser.add_argument('-d', '--data_dir', type=str, help='Path to the data directory')
-    parser.add_argument('-o', '--output_dir', type=str, help='Path to the output directory')
-    parser.add_argument('-p', '--prefix', type=str, help='Prefix of the output result')
-    parser.add_argument('-n', '--sample_name', type=str, help='Sample name of this sample')
-    parser.add_argument('-m', '--mhc_genotype', choices=['mhci', 'mhcii', 'all'], help='MHC genotypes')
+    parser.add_argument('-d', '--data_dir', type=str, required=True, help='Path to the data directory')
+    parser.add_argument('-o', '--output_dir', type=str, required=True, help='Path to the output directory')
+    parser.add_argument('-p', '--prefix', type=str, required=True, help='Prefix of the output result')
+    parser.add_argument('-n', '--sample_name', type=str, required=True, help='Sample name of this sample')
+    parser.add_argument('-m', '--mhc_genotype', choices=['mhci', 'mhcii', 'all'], required=True, help='MHC genotypes')
     args = parser.parse_args()
 
     summarizer = NetMHCSummarizer(args.data_dir, args.output_dir, args.prefix, args.sample_name, args.mhc_genotype)
